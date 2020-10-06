@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="pacman.Executor"/>
+    <fullyQualifiedTypeName name="pacman.Executor.Builder"/>
+    <fullyQualifiedTypeName name="java.util.EnumMap"/>
+    <fullyQualifiedTypeName name="pacman.game.Constants.GHOST"/>
+    <fullyQualifiedTypeName name="pacman.game.Constants.MOVE"/>
+    <fullyQualifiedTypeName name="java.util.Random"/>
+    <fullyQualifiedTypeName name="pacman.game.Game"/>
+    <fullyQualifiedTypeName name="pacman.controllers.GhostController"/>
+    <fullyQualifiedTypeName name="pacman.controllers.KeyBoardInput"/>
+    <fullyQualifiedTypeName name="pacman.controllers.HumanController"/>
+    <fullyQualifiedTypeName name="pacman.controllers.PacmanController"/>
+    <fullyQualifiedTypeName name="pacman.game.Constants.DM"/>
+</qualifiedTypeNameHistroy>
