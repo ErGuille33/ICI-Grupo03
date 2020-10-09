@@ -1,4 +1,4 @@
-package es.ucm.fdi.ici.c2021.practica0.grupo03.GhostRandom;
+package es.ucm.fdi.ici.c2021.practica0.grupo03.Practica0;
 
 
 import pacman.game.Game;
