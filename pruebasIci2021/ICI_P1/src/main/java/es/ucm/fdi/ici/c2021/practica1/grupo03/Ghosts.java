@@ -14,6 +14,17 @@ public final class Ghosts extends GhostController {
 	private MOVE[] allMoves = MOVE.values();
 	private Random rnd = new Random();
 	
+	private void RunAway(GHOST ghostType, Game game, DM euristic) {
+		moves.put(ghostType, game.getNextMoveAwayFromTarget(game.getGhostCurrentNodeIndex(ghostType), game.getPacmanCurrentNodeIndex(), euristic));
+	}
+	
+	private void AgressiveMove(GHOST ghostType, Game game, DM euristic) {
+		if (game.doesGhostRequireAction(ghostType)) {
+			moves.put(ghostType, game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(ghostType),
+					game.getPacmanCurrentNodeIndex(), game.getGhostLastMoveMade(ghostType), euristic));
+		}
+	}
+	
 	@Override
 	public EnumMap<GHOST, MOVE> getMove(Game game, long timeDue) {
 		DM euristic = DM.EUCLID;
@@ -27,6 +38,38 @@ public final class Ghosts extends GhostController {
 				pillDist = d;
 			}
 		}
+		
+		if(game.isGhostEdible(GHOST.BLINKY) || pillDist <= limitPowerPill) {
+			RunAway(GHOST.BLINKY, game, euristic);
+		}
+		else {
+			AgressiveMove(GHOST.BLINKY, game, euristic);
+		}
+		
+		if(game.isGhostEdible(GHOST.INKY) || pillDist <= limitPowerPill) {
+			RunAway(GHOST.INKY, game, euristic);
+		}
+		else {
+			AgressiveMove(GHOST.BLINKY, game, euristic);
+		}
+		
+		if(game.isGhostEdible(GHOST.PINKY) || pillDist <= limitPowerPill) {
+			RunAway(GHOST.PINKY, game, euristic);
+		}
+		else {
+			AgressiveMove(GHOST.BLINKY, game, euristic);
+		}
+		
+		if(game.isGhostEdible(GHOST.SUE) || pillDist <= limitPowerPill) {
+			RunAway(GHOST.SUE, game, euristic);
+		}
+		else {
+			AgressiveMove(GHOST.BLINKY, game, euristic);
+		}
+		
+		
+		
+		
 		
 		for (GHOST ghostType : GHOST.values()) {
 			if (game.doesGhostRequireAction(ghostType)) {
