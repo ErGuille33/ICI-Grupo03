@@ -15,8 +15,10 @@ public class ExecutorTest {
 		
 		PacmanController pacMan = new MsPacMan();
 		GhostController ghosts = new Ghosts();
+		
+		System.out.println("P1");
 		System.out.println(
-		executor.runGame(pacMan, ghosts, 50)
+				executor.runGame(pacMan, ghosts, 50)
 		);
 	}
 

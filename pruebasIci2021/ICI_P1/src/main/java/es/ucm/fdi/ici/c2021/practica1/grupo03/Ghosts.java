@@ -15,13 +15,37 @@ public final class Ghosts extends GhostController {
 	private Random rnd = new Random();
 	
 	private void RunAway(GHOST ghostType, Game game, DM euristic) {
-		moves.put(ghostType, game.getNextMoveAwayFromTarget(game.getGhostCurrentNodeIndex(ghostType), game.getPacmanCurrentNodeIndex(), euristic));
+		double limit = 20;
+		double d = game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(ghostType), euristic);
+		if(d > limit) {
+			moves.put(ghostType, game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(ghostType),
+					game.getPowerPillIndices()[ghostType.ordinal()], game.getGhostLastMoveMade(ghostType), euristic));
+		}
+		else {
+			moves.put(ghostType, game.getNextMoveAwayFromTarget(game.getGhostCurrentNodeIndex(ghostType), game.getPacmanCurrentNodeIndex(), euristic));
+		}
 	}
 	
 	private void AgressiveMove(GHOST ghostType, Game game, DM euristic) {
-		if (game.doesGhostRequireAction(ghostType)) {
+		
+		if (game.doesGhostRequireAction(ghostType)) {							
 			moves.put(ghostType, game.getApproximateNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(ghostType),
 					game.getPacmanCurrentNodeIndex(), game.getGhostLastMoveMade(ghostType), euristic));
+		}
+	}
+	
+	private void TacticalBehaviour() {
+		
+	}
+	
+	private void SemirandomBehaviour(GHOST ghostType, Game game, DM euristic) {
+		if(rnd.nextInt(101) <= 85) {
+			moves.put(ghostType, game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(ghostType),
+					game.getPacmanCurrentNodeIndex(), euristic));
+		}
+		//O se mueve de forma aleatoria
+		else {
+			moves.put(ghostType, allMoves[rnd.nextInt(allMoves.length)]);
 		}
 	}
 	
@@ -50,28 +74,28 @@ public final class Ghosts extends GhostController {
 			RunAway(GHOST.INKY, game, euristic);
 		}
 		else {
-			AgressiveMove(GHOST.BLINKY, game, euristic);
+			AgressiveMove(GHOST.INKY, game, euristic);
 		}
 		
 		if(game.isGhostEdible(GHOST.PINKY) || pillDist <= limitPowerPill) {
 			RunAway(GHOST.PINKY, game, euristic);
 		}
 		else {
-			AgressiveMove(GHOST.BLINKY, game, euristic);
+			AgressiveMove(GHOST.PINKY, game, euristic);
 		}
 		
 		if(game.isGhostEdible(GHOST.SUE) || pillDist <= limitPowerPill) {
 			RunAway(GHOST.SUE, game, euristic);
 		}
 		else {
-			AgressiveMove(GHOST.BLINKY, game, euristic);
+			SemirandomBehaviour(GHOST.SUE, game, euristic);
 		}
 		
 		
 		
 		
 		
-		for (GHOST ghostType : GHOST.values()) {
+		/*for (GHOST ghostType : GHOST.values()) {
 			if (game.doesGhostRequireAction(ghostType)) {
 				
 				//Se mueve lejos de MsPacMan si el fantasma puede ser comido o la distancia a una pill es pequeña
@@ -88,7 +112,7 @@ public final class Ghosts extends GhostController {
 					moves.put(ghostType, allMoves[rnd.nextInt(allMoves.length)]);
 				}
 			}
-		}
+		}*/
 		return moves;
 	}
 }
