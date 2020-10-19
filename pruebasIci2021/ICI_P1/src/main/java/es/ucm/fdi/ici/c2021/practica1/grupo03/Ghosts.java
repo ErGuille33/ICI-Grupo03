@@ -13,6 +13,7 @@ public final class Ghosts extends GhostController {
 	private EnumMap<GHOST, MOVE> moves = new EnumMap<GHOST, MOVE>(GHOST.class);
 	private MOVE[] allMoves = MOVE.values();
 	private Random rnd = new Random();
+	private int[] followIndex = {0, 0};
 	
 	private void RunAway(GHOST ghostType, Game game, DM euristic) {
 		double limit = 20;
@@ -34,12 +35,19 @@ public final class Ghosts extends GhostController {
 		}
 	}
 	
-	private void TacticalBehaviour() {
-		
+	private void TacticalBehaviour(GHOST ghostType, Game game, DM euristic, int puesto, int bloques) {
+		int nodeIndex = game.getPacmanCurrentNodeIndex();
+		MOVE[] m;
+		for(int i = 0; i < bloques; i++) {
+			m = game.getPossibleMoves(nodeIndex, game.getPacmanLastMoveMade());
+			if(m.length != 0)
+				followIndex[puesto] = game.getNeighbour(nodeIndex, m[puesto%m.length]);
+		}
+		moves.put(ghostType, game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(ghostType), followIndex[puesto], euristic));
 	}
 	
 	private void SemirandomBehaviour(GHOST ghostType, Game game, DM euristic) {
-		if(rnd.nextInt(101) <= 85) {
+		if(rnd.nextInt(101) <= 95) {
 			moves.put(ghostType, game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(ghostType),
 					game.getPacmanCurrentNodeIndex(), euristic));
 		}
@@ -74,14 +82,14 @@ public final class Ghosts extends GhostController {
 			RunAway(GHOST.INKY, game, euristic);
 		}
 		else {
-			AgressiveMove(GHOST.INKY, game, euristic);
+			TacticalBehaviour(GHOST.INKY, game, euristic, 0, 1);
 		}
 		
 		if(game.isGhostEdible(GHOST.PINKY) || pillDist <= limitPowerPill) {
 			RunAway(GHOST.PINKY, game, euristic);
 		}
 		else {
-			AgressiveMove(GHOST.PINKY, game, euristic);
+			TacticalBehaviour(GHOST.PINKY, game, euristic, 1, 1);
 		}
 		
 		if(game.isGhostEdible(GHOST.SUE) || pillDist <= limitPowerPill) {
