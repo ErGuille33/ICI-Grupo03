@@ -18,6 +18,7 @@ public final class MsPacMan extends PacmanController{
 	DM euristic = DM.EUCLID;
 	MOVE nextMove = MOVE.NEUTRAL; 
 	int ghostsIndex[] = new int[4];
+	MOVE ghostsMoves[] = new MOVE[4];
 	
 	
 	//Este método indica si existe un fantasma que vaya de frente a pacman, teniendo en cuenta paredes
@@ -67,13 +68,15 @@ public final class MsPacMan extends PacmanController{
 		boolean ghostInFront=false;
 		distance = Double.MAX_VALUE;
 		frontGhost = null;
-		
+		/*Bucle donde recorre los fantasmas, y recoge información sobre ellos*/
 		for(GHOST ghostType : GHOST.values()) {
+			/*COge el fantasma mas cercano*/
 			double d = game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(ghostType), euristic);
 			if(distance > d) {
 				distance = d;
 				ghost = ghostType;
 			}
+			/*Comprueba si existe un fantasma en su misma calle que se dirija hacia ti */
 			switch(game.getPacmanLastMoveMade()){
 			case UP:
 				if(game.getGhostLastMoveMade(ghostType)==MOVE.DOWN) {
@@ -116,13 +119,12 @@ public final class MsPacMan extends PacmanController{
 				frontGhost = null;
 				break;
 			}
-			
+			/*Recoge las posiciones y direcciones de fantasmas*/
 			ghostsIndex[i] = game.getGhostCurrentNodeIndex(ghostType);
+			ghostsMoves[i] = game.getGhostLastMoveMade(ghostType);
 			i++;
 		}
-		//Mira si hay fantasmas que vengan de frente		
-
-		
+		//Mira si hay fantasmas que vengan de frente. Si los hay, huye.		
 		if(ghostInFront && !game.isGhostEdible(frontGhost)) {
 			if(game.isJunction(game.getPacmanCurrentNodeIndex())) {
 				System.out.println("Cambiamos");
