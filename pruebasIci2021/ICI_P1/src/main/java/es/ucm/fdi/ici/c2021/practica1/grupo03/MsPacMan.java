@@ -128,10 +128,12 @@ public final class MsPacMan extends PacmanController{
 		if(ghostInFront && !game.isGhostEdible(frontGhost)) {
 			if(game.isJunction(game.getPacmanCurrentNodeIndex())) {
 				System.out.println("Cambiamos");
+				if(game.getPossibleMoves(game.getPacmanCurrentNodeIndex(), game.getPacmanLastMoveMade())[0] == game.getPacmanLastMoveMade())
 				nextMove = game.getPossibleMoves(game.getPacmanCurrentNodeIndex(), game.getPacmanLastMoveMade())[1];
+				else 
+					nextMove = game.getPossibleMoves(game.getPacmanCurrentNodeIndex(), game.getPacmanLastMoveMade())[0];
 			} else {
 			System.out.println("No Cambiamos");
-
 			nextMove = game.getNextMoveAwayFromTarget(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(frontGhost), euristic);	
 			}
 		}
