@@ -14,6 +14,7 @@ public final class Ghosts extends GhostController {
 	private MOVE[] allMoves = MOVE.values();
 	private Random rnd = new Random();
 	private int[] followIndex = {0, 0};
+	private double distanciaAnterior = Double.MAX_VALUE;
 	
 	private void RunAway(GHOST ghostType, Game game, DM euristic) {
 		double limit = 20;
@@ -46,8 +47,9 @@ public final class Ghosts extends GhostController {
 		moves.put(ghostType, game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(ghostType), followIndex[puesto], euristic));
 	}
 	
-	private void SemirandomBehaviour(GHOST ghostType, Game game, DM euristic) {
-		if(rnd.nextInt(101) <= 95) {
+	//Añadir comportamiento de que cuando MsPacMan esta justo delante ir recto a por ella
+	private void SemirandomBehaviour(GHOST ghostType, Game game, DM euristic) {		
+		if(rnd.nextInt(101) <= 40) {
 			moves.put(ghostType, game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(ghostType),
 					game.getPacmanCurrentNodeIndex(), euristic));
 		}
@@ -55,6 +57,16 @@ public final class Ghosts extends GhostController {
 		else {
 			moves.put(ghostType, allMoves[rnd.nextInt(allMoves.length)]);
 		}
+	}
+	
+	private void SemiAgrssiveBehaviour(GHOST ghostType, Game game, DM euristic) {
+		double d = game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(ghostType), euristic);
+		if(distanciaAnterior < d) {
+			AgressiveMove(ghostType, game, euristic);
+		}else {
+			SemirandomBehaviour(ghostType, game, euristic);
+		}
+		distanciaAnterior = d;
 	}
 	
 	@Override
@@ -82,21 +94,21 @@ public final class Ghosts extends GhostController {
 			RunAway(GHOST.INKY, game, euristic);
 		}
 		else {
-			TacticalBehaviour(GHOST.INKY, game, euristic, 0, 1);
+			TacticalBehaviour(GHOST.INKY, game, euristic, 0, 2);
 		}
 		
 		if(game.isGhostEdible(GHOST.PINKY) || pillDist <= limitPowerPill) {
 			RunAway(GHOST.PINKY, game, euristic);
 		}
 		else {
-			TacticalBehaviour(GHOST.PINKY, game, euristic, 1, 1);
+			TacticalBehaviour(GHOST.PINKY, game, euristic, 1, 2);
 		}
 		
 		if(game.isGhostEdible(GHOST.SUE) || pillDist <= limitPowerPill) {
 			RunAway(GHOST.SUE, game, euristic);
 		}
 		else {
-			SemirandomBehaviour(GHOST.SUE, game, euristic);
+			SemiAgrssiveBehaviour(GHOST.SUE, game, euristic);
 		}
 		
 		
