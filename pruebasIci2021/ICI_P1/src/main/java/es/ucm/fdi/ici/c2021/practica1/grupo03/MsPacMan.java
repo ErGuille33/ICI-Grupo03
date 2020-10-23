@@ -2,7 +2,7 @@ package es.ucm.fdi.ici.c2021.practica1.grupo03;
 
 import pacman.game.Game;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 import pacman.controllers.PacmanController;
 import pacman.game.Constants.DM;
@@ -20,7 +20,62 @@ public final class MsPacMan extends PacmanController{
 	int ghostsIndex[] = new int[4];
 	MOVE ghostsMoves[] = new MOVE[4];
 	
-	
+	//devuelve la siguiente intersección que se encuentra un agente que está en currentNode en dirección direction
+	public int[] nextJunction(Game game, int currentNode, MOVE direction) {
+		int[]junctions=new int [10];
+		for(int i=0; i<junctions.length; i++) {
+			junctions[i]=-1;
+		}
+		int x=0;
+		for(int i=0; i<game.getJunctionIndices().length; i++) {
+			if(direction == MOVE.RIGHT) {
+				if(game.getNodeYCood(currentNode)==game.getNodeYCood(game.getJunctionIndices()[i])) {
+					if(game.getNodeXCood(currentNode)<game.getNodeXCood(game.getJunctionIndices()[i])) {
+							junctions[x]=game.getJunctionIndices()[i];
+							x++;
+						}
+					}
+				}
+			else if(direction == MOVE.LEFT) {
+				if(game.getNodeYCood(currentNode)==game.getNodeYCood(game.getJunctionIndices()[i])) {
+					if(game.getNodeXCood(currentNode)>game.getNodeXCood(game.getJunctionIndices()[i])) {
+							junctions[x]=game.getJunctionIndices()[i];
+							x++;
+						}
+					}
+			}
+			else if(direction == MOVE.UP) {
+				if(game.getNodeXCood(currentNode)==game.getNodeXCood(game.getJunctionIndices()[i])) {
+					if(game.getNodeYCood(currentNode)>game.getNodeYCood(game.getJunctionIndices()[i])) {
+							junctions[x]=game.getJunctionIndices()[i];
+							x++;
+						}
+					}
+			}
+			else {
+				if(game.getNodeXCood(currentNode)==game.getNodeXCood(game.getJunctionIndices()[i])) {
+					if(game.getNodeYCood(currentNode)<game.getNodeYCood(game.getJunctionIndices()[i])) {
+							junctions[x]=game.getJunctionIndices()[i];
+							x++;
+						}
+					}
+			}
+		}
+		return junctions;
+	}
+	public int getClosestJunction(Game game, int[]junctions, int node) {
+		int distance=-1;
+		int junc=-1;
+		for(int i=0; i<junctions.length; i++) {
+			if(junctions[i]!=-1) {
+				double dist=game.getManhattanDistance(node, junctions[i]);
+				if(distance==-1 || dist<distance) {
+					junc=junctions[i];
+				}
+			}
+		}
+		return junc;
+	}
 	//Este método indica si existe un fantasma que vaya de frente a pacman, teniendo en cuenta paredes
 	public boolean isGhostComingFromUp(Game game ,GHOST ghostType) {
 		if(game.getNodeXCood(game.getPacmanCurrentNodeIndex()) == game.getNodeXCood(game.getGhostCurrentNodeIndex(ghostType)) &&
@@ -124,6 +179,24 @@ public final class MsPacMan extends PacmanController{
 			ghostsMoves[i] = game.getGhostLastMoveMade(ghostType);
 			i++;
 		}
+		boolean ghostOnJunction=false;
+		
+		ArrayList<GHOST> ghostJunction=new ArrayList<GHOST>();
+		
+		int junctionsPacman[]=nextJunction(game, game.getPacmanCurrentNodeIndex(), game.getPacmanLastMoveMade());
+		
+		for(GHOST ghostType : GHOST.values()) {
+			if(!game.isGhostEdible(ghostType)) {
+				int junction=getClosestJunction(game, nextJunction(game, game.getGhostCurrentNodeIndex(ghostType), game.getGhostLastMoveMade(ghostType)), game.getGhostCurrentNodeIndex(ghostType));
+				
+				for(int s=0; s<junctionsPacman.length; s++) {
+					if(junctionsPacman[s]==junction && junction !=-1) {
+						ghostOnJunction=true;
+						ghostJunction.add(ghostType);
+					}
+				}
+			}
+		}
 		//Mira si hay fantasmas que vengan de frente. Si los hay, huye.		
 		if(ghostInFront && !game.isGhostEdible(frontGhost)) {
 			if(game.isJunction(game.getPacmanCurrentNodeIndex())) {
@@ -137,13 +210,98 @@ public final class MsPacMan extends PacmanController{
 			nextMove = game.getNextMoveAwayFromTarget(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(frontGhost), euristic);	
 			}
 		}
-
+	
 		//Si hay un fantasma muy cerca
 		else if(!game.isGhostEdible(ghost) && distance <= limitGhost) {
 			System.out.println("Huimos mi gente");
-			nextMove = game.getNextMoveAwayFromTarget(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(ghost), euristic);
+			
+			ArrayList<MOVE>possibleMoves=new ArrayList<MOVE>();
+			possibleMoves.add(MOVE.UP);
+			possibleMoves.add(MOVE.DOWN);
+			possibleMoves.add(MOVE.RIGHT);
+			possibleMoves.add(MOVE.LEFT);
+			
+			 if(ghostOnJunction) {
+					for(GHOST g: ghostJunction) {
+						switch(game.getGhostLastMoveMade(g)) {
+						case UP:
+							possibleMoves.remove(MOVE.DOWN);
+							break;
+						case DOWN:
+							possibleMoves.remove(MOVE.UP);
+							break;
+						case LEFT:
+							possibleMoves.remove(MOVE.RIGHT);
+							break;
+						case RIGHT:
+							possibleMoves.remove(MOVE.LEFT);
+							break;
+						default:
+							break;
+						}
+					}
+			 }
+			
+			switch(game.getGhostLastMoveMade(ghost)) {
+			case UP:
+				possibleMoves.remove(MOVE.DOWN);
+				break;
+			case DOWN:
+				possibleMoves.remove(MOVE.UP);
+				break;
+			case LEFT:
+				possibleMoves.remove(MOVE.RIGHT);
+				break;
+			case RIGHT:
+				possibleMoves.remove(MOVE.LEFT);
+				break;
+			default:
+				break;
 			}
 			
+			for(int p: game.getActivePillsIndices()) {
+				MOVE m=game.getNextMoveTowardsTarget(game.getPacmanCurrentNodeIndex(), 
+						p, euristic);
+				if(possibleMoves.contains(m)) {
+					nextMove=m;
+					System.out.println("pastishuicion");
+					break;
+				}
+			}
+			
+		}
+		
+		else if(ghostOnJunction) {
+			
+			ArrayList<MOVE>possibleMoves=new ArrayList<MOVE>();
+			possibleMoves.add(MOVE.UP);
+			possibleMoves.add(MOVE.DOWN);
+			possibleMoves.add(MOVE.RIGHT);
+			possibleMoves.add(MOVE.LEFT);
+			for(GHOST g: ghostJunction) {
+				switch(game.getGhostLastMoveMade(g)) {
+				case UP:
+					possibleMoves.remove(MOVE.DOWN);
+					break;
+				case DOWN:
+					possibleMoves.remove(MOVE.UP);
+					break;
+				case LEFT:
+					possibleMoves.remove(MOVE.RIGHT);
+					break;
+				case RIGHT:
+					possibleMoves.remove(MOVE.LEFT);
+					break;
+				default:
+					break;
+				}
+			}
+			nextMove=MOVE.NEUTRAL;
+			for(MOVE m :game.getPossibleMoves(game.getPacmanCurrentNodeIndex())){
+				if(possibleMoves.contains(m))
+					nextMove=m;
+			}
+		}
 		
 		//Si es comestible
 		else if(game.isGhostEdible(ghost) && distance <= limitGhost) {
