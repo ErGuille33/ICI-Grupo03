@@ -71,8 +71,8 @@ public final class Ghosts extends GhostController {
 	
 	@Override
 	public EnumMap<GHOST, MOVE> getMove(Game game, long timeDue) {
-		DM euristic = DM.EUCLID;
-		int limitPowerPill = 20;
+		DM euristic = DM.MANHATTAN;
+		int limitPowerPill = 21;
 		moves.clear();
 		
 		double pillDist = Double.MAX_VALUE;
@@ -101,7 +101,7 @@ public final class Ghosts extends GhostController {
 			RunAway(GHOST.PINKY, game, euristic);
 		}
 		else {
-			TacticalBehaviour(GHOST.PINKY, game, euristic, 1, 2);
+			TacticalBehaviour(GHOST.PINKY, game, euristic, 1, 5);
 		}
 		
 		if(game.isGhostEdible(GHOST.SUE) || pillDist <= limitPowerPill) {

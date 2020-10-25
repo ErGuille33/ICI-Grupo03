@@ -3,6 +3,8 @@ package es.ucm.fdi.ici.c2021.practica1.grupo03;
 import pacman.Executor;
 import pacman.controllers.GhostController;
 import pacman.controllers.PacmanController;
+import pacman.controllers.HumanController;
+import pacman.controllers.KeyBoardInput;
 
 public class ExecutorTest {
 
@@ -13,7 +15,7 @@ public class ExecutorTest {
 				.setScaleFactor(3.0)
 				.build();
 		
-		PacmanController pacMan = new MsPacMan();
+		PacmanController pacMan = new HumanController(new KeyBoardInput());//new MsPacMan();
 		GhostController ghosts = new Ghosts();
 		
 		System.out.println("P1");
