@@ -15,7 +15,7 @@ public class ExecutorTest {
 				.setScaleFactor(3.0)
 				.build();
 		
-		PacmanController pacMan = new HumanController(new KeyBoardInput());//new MsPacMan();
+		PacmanController pacMan = new MsPacMan();//new MsPacMan();
 		GhostController ghosts = new Ghosts();
 		
 		System.out.println("P1");
