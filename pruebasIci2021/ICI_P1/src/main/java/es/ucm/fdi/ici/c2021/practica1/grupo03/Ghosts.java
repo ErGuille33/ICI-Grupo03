@@ -16,8 +16,10 @@ public final class Ghosts extends GhostController {
 	private int[] followIndex = {0, 0};
 	private double distanciaAnterior = Double.MAX_VALUE;
 	
+	//Cuando los fantasmas son comestibles, intentan ir hacia las power pills. Si esta muy cerca MsPacMan
+	//simplenete intentan alejarse lo maximo posible
 	private void RunAway(GHOST ghostType, Game game, DM euristic) {
-		double limit = 20;
+		double limit = 8.5;
 		double d = game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(ghostType), euristic);
 		if(d > limit) {
 			moves.put(ghostType, game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(ghostType),
@@ -28,6 +30,7 @@ public final class Ghosts extends GhostController {
 		}
 	}
 	
+	//Busca el camino mas corto hacia MsPacMan y va a por el
 	private void AgressiveMove(GHOST ghostType, Game game, DM euristic) {
 		
 		if (game.doesGhostRequireAction(ghostType)) {							
@@ -36,6 +39,8 @@ public final class Ghosts extends GhostController {
 		}
 	}
 	
+	//Comprueba hacia donde se movera MsPacMan un numero de bloques despues. Depnediendo del fantasma
+	//va hacia la primera desviacion que hay o hacia la segunda
 	private void TacticalBehaviour(GHOST ghostType, Game game, DM euristic, int puesto, int bloques) {
 		int nodeIndex = game.getPacmanCurrentNodeIndex();
 		MOVE[] m;
@@ -59,6 +64,7 @@ public final class Ghosts extends GhostController {
 		}
 	}
 	
+	//Si se esta acercando a MsPacMan usa el comportamiento agresivo. Si no, se mueve practicamente de forma aleatoria
 	private void SemiAgrssiveBehaviour(GHOST ghostType, Game game, DM euristic) {
 		double d = game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(ghostType), euristic);
 		if(distanciaAnterior < d) {
@@ -75,6 +81,7 @@ public final class Ghosts extends GhostController {
 		int limitPowerPill = 21;
 		moves.clear();
 		
+		//Todos los fantasmas intentan alejarse de MsPacMan si se encuentra cerca de la powerPill
 		double pillDist = Double.MAX_VALUE;
 		for(int index : game.getActivePowerPillsIndices()) {
 			double d = game.getDistance(game.getPacmanCurrentNodeIndex(), index, euristic);
@@ -111,28 +118,6 @@ public final class Ghosts extends GhostController {
 			SemiAgrssiveBehaviour(GHOST.SUE, game, euristic);
 		}
 		
-		
-		
-		
-		
-		/*for (GHOST ghostType : GHOST.values()) {
-			if (game.doesGhostRequireAction(ghostType)) {
-				
-				//Se mueve lejos de MsPacMan si el fantasma puede ser comido o la distancia a una pill es pequeña
-				if(game.isGhostEdible(ghostType) || pillDist <= limitPowerPill) {
-					moves.put(ghostType, game.getNextMoveAwayFromTarget(game.getGhostCurrentNodeIndex(ghostType), game.getPacmanCurrentNodeIndex(), euristic));
-				}
-				//Va directo a MsPacMan con probabilidad 90%
-				else if(rnd.nextInt(101) <= 90) {
-					moves.put(ghostType, game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(ghostType),
-							game.getPacmanCurrentNodeIndex(), euristic));
-				}
-				//O se mueve de forma aleatoria
-				else {
-					moves.put(ghostType, allMoves[rnd.nextInt(allMoves.length)]);
-				}
-			}
-		}*/
 		return moves;
 	}
 }
