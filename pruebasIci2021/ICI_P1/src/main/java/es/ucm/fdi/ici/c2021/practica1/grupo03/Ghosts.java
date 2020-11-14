@@ -1,6 +1,5 @@
 package es.ucm.fdi.ici.c2021.practica1.grupo03;
 
-import es.ucm.fdi.ici.fsm.FSM;
 import java.util.EnumMap;
 import java.util.Random;
 
