@@ -8,8 +8,11 @@
     <fullyQualifiedTypeName name="pacman.game.Game"/>
     <fullyQualifiedTypeName name="pacman.controllers.KeyBoardInput"/>
     <fullyQualifiedTypeName name="pacman.controllers.HumanController"/>
-    <fullyQualifiedTypeName name="pacman.game.Constants.DM"/>
     <fullyQualifiedTypeName name="pacman.controllers.PacmanController"/>
     <fullyQualifiedTypeName name="pacman.controllers.GhostController"/>
     <fullyQualifiedTypeName name="pacman.Executor"/>
+    <fullyQualifiedTypeName name="java.lang.Double"/>
+    <fullyQualifiedTypeName name="pacman.game.Constants.DM"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica2.Grupo3.actions.RunAway"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica2.Grupo3.actions.MiddlePath"/>
 </qualifiedTypeNameHistroy>
