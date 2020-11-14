@@ -18,7 +18,7 @@ public class ExecutorTest {
                 .build();
 
         PacmanController pacMan = new es.ucm.fdi.ici.practica2.demofsm.MsPacManFSM();
-        GhostController ghosts = new es.ucm.fdi.ici.practica2.demofsm.GhostsFSM();
+        GhostController ghosts = new es.ucm.fdi.ici.c2021.practica2.Grupo3.GhostFSMG3();
         
         System.out.println( 
         		executor.runGame(pacMan, ghosts, 40)

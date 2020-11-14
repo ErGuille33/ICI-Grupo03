@@ -130,7 +130,7 @@ public final class Ghosts extends GhostController {
 	@Override
 	public EnumMap<GHOST, MOVE> getMove(Game game, long timeDue) {
 		DM euristic = DM.EUCLID;
-		int limitPowerPill = 0; //21
+		int limitPowerPill = 21; //21
 		moves.clear();
 		
 		//Todos los fantasmas intentan alejarse de MsPacMan si se encuentra cerca de la powerPill

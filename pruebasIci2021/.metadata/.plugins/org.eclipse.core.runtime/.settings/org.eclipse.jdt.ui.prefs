@@ -1,4 +1,4 @@
-content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="java.lang.Enum"><rhs name\="pacman.game.Constants$DM"/></lhs><lhs name\="java.lang.constant.Constable"><rhs name\="pacman.game.Constants$DM"/></lhs><lhs name\="pacman.game.Constants$DM"><rhs name\="pacman.game.Constants$DM"/></lhs></history>
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="java.lang.Enum"><rhs name\="pacman.game.Constants$DM"/></lhs><lhs name\="java.lang.constant.Constable"><rhs name\="pacman.game.Constants$DM"/></lhs><lhs name\="pacman.game.Constants$DM"><rhs name\="pacman.game.Constants$DM"/></lhs><lhs name\="pacman.controllers.Controller"><rhs name\="es.ucm.fdi.ici.c2021.practica2.Grupo3.GhostFSMG3"/></lhs><lhs name\="java.lang.Runnable"><rhs name\="es.ucm.fdi.ici.c2021.practica2.Grupo3.GhostFSMG3"/></lhs><lhs name\="pacman.controllers.GhostController"><rhs name\="es.ucm.fdi.ici.c2021.practica2.Grupo3.GhostFSMG3"/></lhs></history>
 content_assist_number_of_computers=12
 eclipse.preferences.version=1
 markOccurrences=false

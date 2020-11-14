@@ -15,4 +15,9 @@
     <fullyQualifiedTypeName name="pacman.game.Constants.DM"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica2.Grupo3.actions.RunAway"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica2.Grupo3.actions.MiddlePath"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica2.Grupo3.transitions.GhostEdibleTransition"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica2.Grupo3.transitions.GhostNotEdibleTransition"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica2.Grupo3.GhostFSMG3"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.fsm.observers.ConsoleFSMObserver"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.fsm.observers.GraphFSMObserver"/>
 </qualifiedTypeNameHistroy>
