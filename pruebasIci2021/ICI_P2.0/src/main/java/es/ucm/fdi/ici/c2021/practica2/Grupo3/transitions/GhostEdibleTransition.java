@@ -32,8 +32,6 @@ public class GhostEdibleTransition implements Transition  {
 		}
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "Ghost is edible";
