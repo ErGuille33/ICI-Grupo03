@@ -13,18 +13,19 @@ public class MsPacManInput extends Input {
 	private int maxPathDistance = 50;
 
 	double eatDistance = 40;
-	DM euristic = DM.PATH;
+	DM euristic;
 
 	public MsPacManInput(Game game) {
 		super(game);
-		isChasedGhost  = new boolean []  {false,false,false,false};
-		isEdibleGhost  = new boolean []  {false,false,false,false};
+		
 
 	}
 
 	@Override
 	public void parseInput() {
-
+		isChasedGhost  = new boolean []  {false,false,false,false};
+		isEdibleGhost  = new boolean []  {false,false,false,false};
+		euristic = DM.PATH;
 		int i = 0;
 		
 		for (GHOST g : GHOST.values()) {
