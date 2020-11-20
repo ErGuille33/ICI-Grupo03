@@ -21,31 +21,15 @@ public class MsPacManChasePill implements Action{
 		public MOVE execute(Game game) {
 			
 			int pacManNode = game.getPacmanCurrentNodeIndex(); 
-			MOVE[] moves = game.getPossibleMoves(pacManNode, game.getPacmanLastMoveMade());
+
 			ArrayList<MOVE>possibleMoves=new ArrayList<MOVE>();
 			MOVE nextMove = MOVE.NEUTRAL;
 			
-			for(MOVE m: moves) {
-				possibleMoves.add(m);
-			}
+			//Quitamos los movimientos que pongan en problemas a PacMan
+			RemoveMovements rm = new RemoveMovements();
+
+			possibleMoves = rm.getPossibleMoves(game);
 			
-			for(GHOST ghostType : GHOST.values()) {
-				
-				int ghostNode = game.getGhostCurrentNodeIndex(ghostType);
-					
-				double d = game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(ghostType), euristic);
-				//Si estan dentro del radio, no son comestibles.
-				if(!game.isGhostEdible(ghostType)) {
-					//Si el estan dentro del radio maximo siguiendo el camino
-					if(game.getShortestPathDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(ghostType))
-							<= maxPathDistance){
-						//Borran los posibles movimientos que le dirijan hacia un fantasma demasiado cercano que vaya hacia él
-						if(game.getGhostLastMoveMade(ghostType) == game.getNextMoveTowardsTarget(ghostNode, pacManNode, euristic)) {
-							possibleMoves.remove(game.getNextMoveTowardsTarget(pacManNode, ghostNode, euristic));
-						}
-					}
-				}
-			}
 			//Pildora mas cercana
 			int pill = getClosestPossiblePill(game, possibleMoves, pacManNode);
 			
