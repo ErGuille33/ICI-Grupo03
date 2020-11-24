@@ -11,6 +11,7 @@ public class MsPacManInput extends Input {
 	private boolean[] isChasedGhost;
 	private boolean[] isEdibleGhost;
 	private int maxPathDistance = 50;
+	private double dist = 0;
 
 	double eatDistance = 40;
 	DM euristic;
@@ -23,6 +24,8 @@ public class MsPacManInput extends Input {
 
 	@Override
 	public void parseInput() {
+		eatDistance = 20;
+		maxPathDistance = 50;
 		isChasedGhost  = new boolean []  {false,false,false,false};
 		isEdibleGhost  = new boolean []  {false,false,false,false};
 		euristic = DM.PATH;
@@ -33,8 +36,9 @@ public class MsPacManInput extends Input {
 			isEdibleGhost[i] = false;
 			// SI el fantasma esta en distancia y es comestible
 			if (game.isGhostEdible(g)) {
-				if (game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(g),
-						euristic) <= eatDistance) {
+				dist = game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(g),
+						euristic);
+				if (dist <= eatDistance) {
 					isEdibleGhost[i] = true;
 				}
 

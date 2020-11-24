@@ -13,7 +13,7 @@ public class MsPacManChaseGhost implements Action {
 
 	DM euristic = DM.PATH;
 	double maxPathDistance = 50;
-	double eatDistance = 40;
+	double eatDistance = 30;
 	
 
 	public MsPacManChaseGhost() {
@@ -22,6 +22,8 @@ public class MsPacManChaseGhost implements Action {
 
 	@Override
 	public MOVE execute(Game game) {
+		maxPathDistance = 50;
+		eatDistance = 20;
 
 		int pacManNode = game.getPacmanCurrentNodeIndex();
 		
@@ -53,7 +55,11 @@ public class MsPacManChaseGhost implements Action {
 		int siz = possibleMoves.size();
 
 		int mv = (int) Math.floor(Math.random() * siz);
-
+		
+		System.out.println("Te sigo primo");
+		if(siz < 1) {
+			return MOVE.NEUTRAL;
+		}
 		return possibleMoves.get(mv);
 
 	}
