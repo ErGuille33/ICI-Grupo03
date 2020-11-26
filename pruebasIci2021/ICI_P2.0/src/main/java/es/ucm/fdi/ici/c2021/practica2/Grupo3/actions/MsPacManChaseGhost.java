@@ -22,6 +22,7 @@ public class MsPacManChaseGhost implements Action {
 
 	@Override
 	public MOVE execute(Game game) {
+		/*
 		maxPathDistance = 50;
 		eatDistance = 20;
 
@@ -61,6 +62,10 @@ public class MsPacManChaseGhost implements Action {
 			return MOVE.NEUTRAL;
 		}
 		return possibleMoves.get(mv);
+		*/
+		RemoveMovements rm = new RemoveMovements();
+		
+		return rm.getHighestScoreMove(rm.getScoredMoves(game));
 
 	}
 }

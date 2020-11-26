@@ -19,7 +19,7 @@ public class MsPacManChasePill implements Action{
 		
 		@Override
 		public MOVE execute(Game game) {
-			
+			/*
 			int pacManNode = game.getPacmanCurrentNodeIndex(); 
 
 			ArrayList<MOVE>possibleMoves=new ArrayList<MOVE>();
@@ -49,19 +49,23 @@ public class MsPacManChasePill implements Action{
 			}
 			
 			return nextMove;
+			*/
+			RemoveMovements rm = new RemoveMovements();
+			
+			return rm.getHighestScoreMove(rm.getScoredMoves(game));
 			
 		}
 		
 		public int getClosestPossiblePill(Game game, ArrayList<MOVE> moves, int pacManNode) {
-			double pillDist=Double.MAX_VALUE;
-			int closestPill=-1;
+			double pillDist = Double.MAX_VALUE;
+			int closestPill = -1;
 			for(int pill: game.getActivePillsIndices()) {
-				double dist=game.getDistance(pacManNode, pill, euristic);
+				double dist = game.getDistance(pacManNode, pill, euristic);
 				//SI el siguiente movimiento hacia la pill es posible, y la distancia es menor que la anterior.
 				if(moves.contains(game.getNextMoveTowardsTarget(pacManNode, pill, euristic)) && 
-						game.getDistance(pacManNode, pill, euristic)<pillDist) {
-					pillDist=dist;
-					closestPill=pill;
+						game.getDistance(pacManNode, pill, euristic) < pillDist) {
+					pillDist = dist;
+					closestPill = pill;
 				}
 			}
 			return closestPill;

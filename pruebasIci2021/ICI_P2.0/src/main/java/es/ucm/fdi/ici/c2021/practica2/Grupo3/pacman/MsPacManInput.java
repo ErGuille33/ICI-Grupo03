@@ -19,7 +19,6 @@ public class MsPacManInput extends Input {
 	public MsPacManInput(Game game) {
 		super(game);
 		
-
 	}
 
 	@Override
