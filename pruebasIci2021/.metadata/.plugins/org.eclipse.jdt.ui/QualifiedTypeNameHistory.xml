@@ -20,4 +20,7 @@
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.fsm.observers.ConsoleFSMObserver"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.fsm.observers.GraphFSMObserver"/>
     <fullyQualifiedTypeName name="java.lang.Double"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.practica3.demorules.GhostsRules"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica3.grupo03.ghosts.actions.MiddlePath"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica3.grupo03.ghosts.actions.RunAway"/>
 </qualifiedTypeNameHistroy>
