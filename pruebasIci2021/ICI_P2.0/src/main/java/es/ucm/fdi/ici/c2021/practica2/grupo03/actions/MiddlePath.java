@@ -1,4 +1,4 @@
-package es.ucm.fdi.ici.c2021.practica2.Grupo3.actions;
+package es.ucm.fdi.ici.c2021.practica2.grupo03.actions;
 
 import es.ucm.fdi.ici.fsm.Action;
 import pacman.game.Game;

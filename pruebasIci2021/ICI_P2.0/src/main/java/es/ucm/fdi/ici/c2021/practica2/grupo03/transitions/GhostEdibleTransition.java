@@ -1,17 +1,18 @@
-package es.ucm.fdi.ici.c2021.practica2.Grupo3.transitions;
+package es.ucm.fdi.ici.c2021.practica2.grupo03.transitions;
 
 import es.ucm.fdi.ici.fsm.Input;
 import es.ucm.fdi.ici.fsm.Transition;
 import es.ucm.fdi.ici.practica2.demofsm.ghosts.GhostsInput;
 import pacman.game.Constants.GHOST;
 
-public class GhostNotEdibleTransition implements Transition  {
+public class GhostEdibleTransition implements Transition  {
 
 	GHOST ghost;
-	public GhostNotEdibleTransition(GHOST ghost) {
+	public GhostEdibleTransition(GHOST ghost) {
 		super();
 		this.ghost = ghost;
 	}
+
 
 
 	@Override
@@ -19,23 +20,21 @@ public class GhostNotEdibleTransition implements Transition  {
 		GhostsInput input = (GhostsInput)in;
 		switch(ghost) {
 			case BLINKY:
-				return !input.isBLINKYedible();
+				return input.isBLINKYedible();
 			case INKY:
-				return !input.isINKYedible();
+				return input.isINKYedible();
 			case PINKY:
-				return !input.isPINKYedible();
+				return input.isPINKYedible();
 			case SUE:
-				return !input.isSUEedible();
+				return input.isSUEedible();
 			default:
 				return false;
 		}
 	}
 
-
-
 	@Override
 	public String toString() {
-		return "Ghost is not edible";
+		return "Ghost is edible";
 	}
 
 	

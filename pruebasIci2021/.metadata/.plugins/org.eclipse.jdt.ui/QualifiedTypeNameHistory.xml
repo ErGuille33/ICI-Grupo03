@@ -11,7 +11,6 @@
     <fullyQualifiedTypeName name="pacman.controllers.PacmanController"/>
     <fullyQualifiedTypeName name="pacman.controllers.GhostController"/>
     <fullyQualifiedTypeName name="pacman.Executor"/>
-    <fullyQualifiedTypeName name="java.lang.Double"/>
     <fullyQualifiedTypeName name="pacman.game.Constants.DM"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica2.Grupo3.actions.RunAway"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica2.Grupo3.actions.MiddlePath"/>
@@ -20,4 +19,5 @@
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica2.Grupo3.GhostFSMG3"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.fsm.observers.ConsoleFSMObserver"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.fsm.observers.GraphFSMObserver"/>
+    <fullyQualifiedTypeName name="java.lang.Double"/>
 </qualifiedTypeNameHistroy>

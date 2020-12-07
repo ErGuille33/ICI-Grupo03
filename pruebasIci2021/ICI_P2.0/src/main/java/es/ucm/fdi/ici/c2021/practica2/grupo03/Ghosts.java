@@ -1,4 +1,4 @@
-package es.ucm.fdi.ici.c2021.practica2.Grupo3;
+package es.ucm.fdi.ici.c2021.practica2.grupo03;
 
 import java.awt.BorderLayout;
 import java.util.EnumMap;
@@ -6,10 +6,10 @@ import java.util.EnumMap;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import es.ucm.fdi.ici.c2021.practica2.Grupo3.actions.MiddlePath;
-import es.ucm.fdi.ici.c2021.practica2.Grupo3.actions.RunAway;
-import es.ucm.fdi.ici.c2021.practica2.Grupo3.transitions.GhostEdibleTransition;
-import es.ucm.fdi.ici.c2021.practica2.Grupo3.transitions.GhostNotEdibleTransition;
+import es.ucm.fdi.ici.c2021.practica2.grupo03.actions.MiddlePath;
+import es.ucm.fdi.ici.c2021.practica2.grupo03.actions.RunAway;
+import es.ucm.fdi.ici.c2021.practica2.grupo03.transitions.GhostEdibleTransition;
+import es.ucm.fdi.ici.c2021.practica2.grupo03.transitions.GhostNotEdibleTransition;
 import es.ucm.fdi.ici.fsm.FSM;
 import es.ucm.fdi.ici.fsm.SimpleState;
 import es.ucm.fdi.ici.fsm.observers.ConsoleFSMObserver;
@@ -21,19 +21,19 @@ import pacman.game.Constants.DM;
 import pacman.game.Constants.GHOST;
 import pacman.game.Constants.MOVE;
 
-public class GhostFSMG3 extends GhostController {
+public class Ghosts extends GhostController {
 
 	EnumMap<GHOST,FSM> fsms;
 	
-	DM euristic = DM.MANHATTAN;
-	public GhostFSMG3()
+	DM euristic = DM.EUCLID;
+	public Ghosts()
 	{
 		fsms = new EnumMap<GHOST,FSM>(GHOST.class);
 		for(GHOST ghost: GHOST.values()) {
 			FSM fsm = new FSM(ghost.name());
 			//fsm.addObserver(new ConsoleFSMObserver(ghost.name()));
-			GraphFSMObserver graphObserver = new GraphFSMObserver(ghost.name());
-			fsm.addObserver(graphObserver);
+			//GraphFSMObserver graphObserver = new GraphFSMObserver(ghost.name());
+			//fsm.addObserver(graphObserver);
 
 			
 			SimpleState middlePath = new SimpleState("middlePath", new MiddlePath(ghost, euristic));
@@ -48,13 +48,13 @@ public class GhostFSMG3 extends GhostController {
 			fsm.ready(middlePath);
 			
 			//graphObserver.showInFrame();
-			JFrame frame = new JFrame();
+			/*JFrame frame = new JFrame();
 	    	JPanel main = new JPanel();
 	    	main.setLayout(new BorderLayout());
 	    	main.add(graphObserver.getAsPanel(true, null), BorderLayout.CENTER);
 	    	frame.getContentPane().add(main);
 	    	frame.pack();
-	    	frame.setVisible(true);
+	    	frame.setVisible(true);*/
 			
 			fsms.put(ghost, fsm);
 		}

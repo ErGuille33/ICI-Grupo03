@@ -1,8 +1,8 @@
-package es.ucm.fdi.ici.c2021.practica2.Grupo3.actions;
+package es.ucm.fdi.ici.c2021.practica2.grupo03.actions;
 
 import java.util.ArrayList;
-import es.ucm.fdi.ici.c2021.practica2.Grupo3.actions.RemoveMovements;
 
+import es.ucm.fdi.ici.c2021.practica2.grupo03.actions.RemoveMovements;
 import es.ucm.fdi.ici.fsm.Action;
 import pacman.game.Game;
 import pacman.game.Constants.DM;
@@ -23,7 +23,7 @@ public class MsPacManChaseGhost implements Action {
 	@Override
 	public MOVE execute(Game game) {
 		maxPathDistance = 50;
-		eatDistance = 20;
+		eatDistance = 110;
 
 		int pacManNode = game.getPacmanCurrentNodeIndex();
 		
@@ -56,7 +56,6 @@ public class MsPacManChaseGhost implements Action {
 
 		int mv = (int) Math.floor(Math.random() * siz);
 		
-		System.out.println("Te sigo primo");
 		if(siz < 1) {
 			return MOVE.NEUTRAL;
 		}

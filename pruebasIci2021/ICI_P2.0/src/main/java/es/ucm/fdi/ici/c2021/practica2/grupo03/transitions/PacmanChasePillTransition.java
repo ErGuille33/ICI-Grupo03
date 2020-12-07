@@ -1,12 +1,12 @@
-package es.ucm.fdi.ici.c2021.practica2.Grupo3.transitions;
+package es.ucm.fdi.ici.c2021.practica2.grupo03.transitions;
 
+import es.ucm.fdi.ici.c2021.practica2.grupo03.pacman.*;
 import es.ucm.fdi.ici.fsm.Input;
 import es.ucm.fdi.ici.fsm.Transition;
-import es.ucm.fdi.ici.c2021.practica2.Grupo3.pacman.*;
-import pacman.game.Game;
 
-public class PacmanChaseGhostTransition implements Transition {
-	public PacmanChaseGhostTransition() {
+public class PacmanChasePillTransition implements Transition {
+
+	public PacmanChasePillTransition() {
 		super();
 	}
 
@@ -15,14 +15,16 @@ public class PacmanChaseGhostTransition implements Transition {
 		MsPacManInput input = (MsPacManInput) in;
 		for (int i = 0; i < 4; i++) {
 			if (input.isEdibleGhost()[i]) {
-				return true;
+				return false;
 			}
 		}
-		return false;
+		return true;
+
 	}
 
 	@Override
 	public String toString() {
-		return "Chasing Ghost";
+		return "Chasing Pills";
 	}
+
 }
