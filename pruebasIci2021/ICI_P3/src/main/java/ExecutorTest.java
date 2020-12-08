@@ -1,6 +1,6 @@
 
 
-import es.ucm.fdi.ici.c2021.practica3.grupo03.GhostsRules;
+import es.ucm.fdi.ici.c2021.practica3.grupo03.Ghosts;
 import pacman.Executor;
 import pacman.controllers.GhostController;
 import pacman.controllers.PacmanController;
@@ -18,8 +18,8 @@ public class ExecutorTest {
                 .setScaleFactor(3.0)
                 .build();
 
-        PacmanController pacMan = new MsPacManRules();
-        GhostController ghosts = new GhostsRules();
+        PacmanController pacMan = new es.ucm.fdi.ici.c2021.practica2.grupo03.MsPacMan();
+        GhostController ghosts = new Ghosts();
         
         System.out.println( 
         		executor.runGame(pacMan, ghosts, 40)
