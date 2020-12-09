@@ -3,6 +3,7 @@ package es.ucm.fdi.ici.c2021.practica3.grupo03.PacMan.Actions;
 import java.util.ArrayList;
 
 import es.ucm.fdi.ici.rules.Action;
+import jess.Fact;
 import pacman.game.Game;
 import pacman.game.Constants.DM;
 import pacman.game.Constants.GHOST;
