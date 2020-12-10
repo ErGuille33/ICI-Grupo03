@@ -1,4 +1,4 @@
-package es.ucm.fdi.ici.c2021.practica3.grupo03.PacMan;
+package es.ucm.fdi.ici.c2021.practica3.grupo03.pacman;
 
 import java.util.Collection;
 import java.util.Vector;

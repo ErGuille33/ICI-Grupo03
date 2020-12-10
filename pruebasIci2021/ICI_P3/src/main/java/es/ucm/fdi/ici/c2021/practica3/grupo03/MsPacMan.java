@@ -2,8 +2,9 @@ package es.ucm.fdi.ici.c2021.practica3.grupo03;
 
 import java.util.HashMap;
 
-import es.ucm.fdi.ici.c2021.practica3.grupo03.PacMan.*;
-import es.ucm.fdi.ici.c2021.practica3.grupo03.PacMan.Actions.*;
+import es.ucm.fdi.ici.c2021.practica3.grupo03.pacman.MsPacManInput;
+import es.ucm.fdi.ici.c2021.practica3.grupo03.pacman.Actions.MsPacManChaseGhost;
+import es.ucm.fdi.ici.c2021.practica3.grupo03.pacman.Actions.MsPacManChasePill;
 import es.ucm.fdi.ici.rules.Action;
 import es.ucm.fdi.ici.rules.Input;
 import es.ucm.fdi.ici.rules.RuleEngine;

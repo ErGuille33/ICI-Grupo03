@@ -23,4 +23,7 @@
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.practica3.demorules.GhostsRules"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica3.grupo03.ghosts.actions.MiddlePath"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica3.grupo03.ghosts.actions.RunAway"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica3.grupo03.pacman.MsPacManInput"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica3.grupo03.pacman.Actions.MsPacManChaseGhost"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica3.grupo03.pacman.Actions.MsPacManChasePill"/>
 </qualifiedTypeNameHistroy>

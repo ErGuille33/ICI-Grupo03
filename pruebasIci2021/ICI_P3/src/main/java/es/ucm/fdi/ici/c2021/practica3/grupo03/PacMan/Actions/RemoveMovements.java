@@ -1,5 +1,4 @@
-package es.ucm.fdi.ici.c2021.practica3.grupo03.PacMan.Actions;
-
+package es.ucm.fdi.ici.c2021.practica3.grupo03.pacman.Actions;
 import java.util.ArrayList;
 
 import pacman.game.Game;
