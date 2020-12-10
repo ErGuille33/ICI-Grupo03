@@ -11,8 +11,8 @@ import pacman.game.Constants.GHOST;
 public class MsPacManInput extends Input {
 
 	// Blinki, Inky, Pinky ,Sue
-	private boolean[] isChasedGhost;
-	private boolean[] isEdibleGhost;
+	private boolean[] isChasedGhost = new boolean[4];
+	private boolean[] isEdibleGhost = new boolean[4];
 	private int maxPathDistance = 50;
 	private double dist = 0;
 
