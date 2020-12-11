@@ -15,7 +15,7 @@ import pacman.game.Constants.DM;
 import pacman.game.Constants.MOVE;
 
 public class MsPacMan extends PacmanController {
-private static final String RULES_PATH = "es/ucm/fdi/ici/c2021/practica3/grupo03/";
+private static final String RULES_PATH = "es/ucm/fdi/ici/c2021/practica3/grupo03";
 	
 	HashMap<String,Action> map;
 	
@@ -37,8 +37,8 @@ private static final String RULES_PATH = "es/ucm/fdi/ici/c2021/practica3/grupo03
 		pacManRuleEngine = new RuleEngine("MSPACMAN",rulesFile,map);
 		
 		//add observer only to BLINKY
-		ConsoleRuleEngineObserver observer = new ConsoleRuleEngineObserver("MSPACMAN", true);
-		pacManRuleEngine.addObserver(observer);
+		//ConsoleRuleEngineObserver observer = new ConsoleRuleEngineObserver("MSPACMAN", true);
+		//pacManRuleEngine.addObserver(observer);
 		
 	}
 

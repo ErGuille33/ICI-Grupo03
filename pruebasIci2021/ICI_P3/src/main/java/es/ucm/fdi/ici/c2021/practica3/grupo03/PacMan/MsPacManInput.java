@@ -12,7 +12,8 @@ public class MsPacManInput extends Input {
 
 	// Blinki, Inky, Pinky ,Sue
 	private boolean[] isChasedGhost = new boolean[4];
-	private boolean[] isEdibleGhost = new boolean[4];
+	private boolean[] edibleGhost = new boolean[4];
+	private boolean isEdibleGhost = false;
 	private int maxPathDistance = 50;
 	private double dist = 0;
 
@@ -29,32 +30,34 @@ public class MsPacManInput extends Input {
 	public void parseInput() {
 		eatDistance = 20;
 		maxPathDistance = 50;
-		isEdibleGhost  = new boolean []  {false,false,false,false};
+		edibleGhost  = new boolean []  {false,false,false,false};
+		isChasedGhost  = new boolean []  {false,false,false,false};
 		euristic = DM.PATH;
 		int i = 0;
 		
 		for (GHOST g : GHOST.values()) {
 			isChasedGhost[i] = false;
-			isEdibleGhost[i] = false;
+			edibleGhost[i] = false;
 			// SI el fantasma esta en distancia y es comestible
 			if (game.isGhostEdible(g)) {
 				dist = game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(g),
 						euristic);
 				if (dist <= eatDistance) {
-					isEdibleGhost[i] = true;
+					edibleGhost[i] = true;
 				}
 
 			} 
 
 			}
 			i++;
+			isEdibleGhost =  isEdibleGhost();
 		}
 
 
 	public boolean isEdibleGhost() {
 		
 		for (int i = 0; i < 4; i++) {
-			if (isEdibleGhost[i]) {
+			if (edibleGhost[i]) {
 				return true;
 			}
 		}
@@ -64,7 +67,7 @@ public class MsPacManInput extends Input {
 	@Override
 	public Collection<String> getFacts() {
 		Vector<String> facts = new Vector<String>();
-		facts.add(String.format("(PacMan (edibleGhost %s))", this.isEdibleGhost));
+		facts.add(String.format("(MSPACMAN (edibleGhost %s))", this.isEdibleGhost));
 		return facts;
 	}
 	
