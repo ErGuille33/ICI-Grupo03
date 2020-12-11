@@ -9,15 +9,12 @@
 
 (deftemplate SUE
 	(slot edible (type SYMBOL)))
-	
-(deftemplate MSPACMAN 
-    (slot mindistancePPill))
     
 (deftemplate ACTION
 	(slot id))   
     
-(defrule SUEchases
-	(SUE (edible false)) => (assert (ACTION (id SUEchases))))
+(defrule SUEmiddlePath
+	(SUE (edible false)) => (assert (ACTION (id SUEmiddlePath))))
 
-(defrule BLINKYrunsAway
+(defrule SUErunsAway
 	(SUE (edible true)) =>  (assert (ACTION (id SUErunsAway))))

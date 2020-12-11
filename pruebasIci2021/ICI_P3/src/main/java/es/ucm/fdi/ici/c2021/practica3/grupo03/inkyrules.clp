@@ -9,15 +9,12 @@
 
 (deftemplate SUE
 	(slot edible (type SYMBOL)))
-	
-(deftemplate MSPACMAN 
-    (slot mindistancePPill))
     
 (deftemplate ACTION
 	(slot id))   
     
-(defrule INKYchases
-	(INKY (edible false)) => (assert (ACTION (id INKYchases))))
+(defrule INKYmiddlePath
+	(INKY (edible false)) => (assert (ACTION (id INKYmiddlePath))))
 
 (defrule INKYrunsAway
 	(INKY (edible true)) =>  (assert (ACTION (id INKYrunsAway))))

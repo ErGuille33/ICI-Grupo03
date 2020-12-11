@@ -10,28 +10,20 @@
 
 (deftemplate SUE
 	(slot edible (type SYMBOL)))
-	
-(deftemplate MSPACMAN 
-    (slot mindistancePPill (type NUMBER)) )
     
 ;DEFINITION OF THE ACTION FACT
 (deftemplate ACTION
 	(slot id) (slot info (default "")) ) 
    
 ;RULES 
-(defrule BLINKYrunsAwayMSPACMANclosePPill
-	(MSPACMAN (mindistancePPill ?d)) (test (<= ?d 30)) 
-	=>  
-	(assert (ACTION (id BLINKYrunsAway) (info "MSPacMan cerca PPill"))) )
-
 (defrule BLINKYrunsAway
 	(BLINKY (edible true)) 
 	=>  
 	(assert (ACTION (id BLINKYrunsAway) (info "Comestible --> huir") )))
 	
-(defrule BLINKYchases
+(defrule BLINKYmiddlePath
 	(BLINKY (edible false)) 
 	=> 
-	(assert (ACTION (id BLINKYchases) (info "No comestible --> perseguir") )))	
+	(assert (ACTION (id BLINKYmiddlePath) (info "No comestible --> perseguir") )))	
 	
 	
