@@ -26,4 +26,6 @@
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica3.grupo03.pacman.MsPacManInput"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica3.grupo03.pacman.Actions.MsPacManChaseGhost"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica3.grupo03.pacman.Actions.MsPacManChasePill"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica4.grupo03.ghosts.GhostsActionSelector"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica4.grupo03.ghosts.GhostsInput"/>
 </qualifiedTypeNameHistroy>
