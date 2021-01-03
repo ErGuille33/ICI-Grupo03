@@ -2,7 +2,6 @@
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="pacman.Executor.Builder"/>
     <fullyQualifiedTypeName name="java.util.EnumMap"/>
-    <fullyQualifiedTypeName name="pacman.game.Constants.GHOST"/>
     <fullyQualifiedTypeName name="pacman.game.Constants.MOVE"/>
     <fullyQualifiedTypeName name="java.util.Random"/>
     <fullyQualifiedTypeName name="pacman.game.Game"/>
@@ -11,7 +10,6 @@
     <fullyQualifiedTypeName name="pacman.controllers.PacmanController"/>
     <fullyQualifiedTypeName name="pacman.controllers.GhostController"/>
     <fullyQualifiedTypeName name="pacman.Executor"/>
-    <fullyQualifiedTypeName name="pacman.game.Constants.DM"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica2.Grupo3.actions.RunAway"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica2.Grupo3.actions.MiddlePath"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica2.Grupo3.transitions.GhostEdibleTransition"/>
@@ -28,4 +26,9 @@
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica3.grupo03.pacman.Actions.MsPacManChasePill"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica4.grupo03.ghosts.GhostsActionSelector"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica4.grupo03.ghosts.GhostsInput"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica4.grupo03.ghosts.actions.MiddlePath"/>
+    <fullyQualifiedTypeName name="pacman.game.Constants.GHOST"/>
+    <fullyQualifiedTypeName name="pacman.game.Constants.DM"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica4.grupo03.ghosts.actions.FindPacman"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica4.grupo03.Ghosts"/>
 </qualifiedTypeNameHistroy>
