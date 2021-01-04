@@ -1,6 +1,7 @@
 package es.ucm.fdi.ici.c2021.practica4.grupo03.ghosts;
 
 import java.util.HashMap;
+
 import java.util.Map;
 
 import es.ucm.fdi.ici.fuzzy.Input;

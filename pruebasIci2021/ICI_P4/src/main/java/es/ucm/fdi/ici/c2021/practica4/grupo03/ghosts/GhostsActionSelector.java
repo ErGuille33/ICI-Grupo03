@@ -2,6 +2,7 @@ package es.ucm.fdi.ici.c2021.practica4.grupo03.ghosts;
 
 import java.util.HashMap;
 
+
 import es.ucm.fdi.ici.c2021.practica4.grupo03.ghosts.actions.FindPacman;
 import es.ucm.fdi.ici.c2021.practica4.grupo03.ghosts.actions.MiddlePath;
 import es.ucm.fdi.ici.fuzzy.Action;
