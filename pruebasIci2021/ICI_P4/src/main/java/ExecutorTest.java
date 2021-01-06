@@ -1,7 +1,7 @@
 
 
 import es.ucm.fdi.ici.c2021.practica4.grupo03.Ghosts;
-import es.ucm.fdi.ici.practica4.demofuzzy.MsPacManFuzzy;
+import es.ucm.fdi.ici.c2021.practica4.grupo03.MsPacMan;
 import pacman.Executor;
 import pacman.controllers.GhostController;
 import pacman.controllers.PacmanController;
@@ -15,10 +15,11 @@ public class ExecutorTest {
                 .setGhostPO(true)
                 .setPacmanPO(true)
                 .setVisual(true)
+                .setPacmanPOvisual(true)
                 .setScaleFactor(3.0)
                 .build();
 
-        PacmanController pacMan = new MsPacManFuzzy();
+        PacmanController pacMan = new MsPacMan();
         GhostController ghosts = new Ghosts();
         
         System.out.println( 
