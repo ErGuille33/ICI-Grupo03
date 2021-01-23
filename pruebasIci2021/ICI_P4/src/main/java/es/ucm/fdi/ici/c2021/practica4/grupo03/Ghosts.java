@@ -20,7 +20,7 @@ public class Ghosts extends GhostController{
     private Random rnd = new Random();
 
     
-    private static final String RULES_PATH = "src/main/java/es/ucm/fdi/ici/c2021/practica4/grupo03/ghosts/";
+    private static final String RULES_PATH = "bin/";
 	FuzzyEngine[] fuzzyEngine = {null, null, null, null};
 	GhostsInput[] input = {null, null, null, null};
 	
@@ -31,8 +31,8 @@ public class Ghosts extends GhostController{
 			int n = ghostType.ordinal();
 			input[n] = new GhostsInput();
 			fuzzyEngine[n] = new FuzzyEngine("Ghosts",RULES_PATH+"ghosts.fcl","FuzzyGhosts",actionSelector);
-			ConsoleFuzzyEngineObserver observer = new ConsoleFuzzyEngineObserver("Ghosts","GhostsRules");
-			fuzzyEngine[n].addObserver(observer);
+			//ConsoleFuzzyEngineObserver observer = new ConsoleFuzzyEngineObserver("Ghosts","GhostsRules");
+			//fuzzyEngine[n].addObserver(observer);
 		}
 	}
     @Override

@@ -10,7 +10,7 @@ import pacman.game.Game;
 import pacman.game.Constants.MOVE;
 
 public class MsPacMan extends PacmanController{
-    private static final String RULES_PATH = "src/main/java/es/ucm/fdi/ici/c2021/practica4/grupo03/pacman/";
+    private static final String RULES_PATH = "bin/";
 	FuzzyEngine fuzzyEngine;
 	PacmanInput input ;
 	
@@ -19,9 +19,9 @@ public class MsPacMan extends PacmanController{
 		ActionSelector actionSelector = new PacmanActionSelector();
 		input = new PacmanInput();
 		 
-		ConsoleFuzzyEngineObserver observer = new ConsoleFuzzyEngineObserver("MsPacMan","PacmanRules");
+		//ConsoleFuzzyEngineObserver observer = new ConsoleFuzzyEngineObserver("MsPacMan","PacmanRules");
 		fuzzyEngine = new FuzzyEngine("MsPacMan",RULES_PATH+"pacman.fcl","FuzzyPacman",actionSelector);
-		fuzzyEngine.addObserver(observer);
+		//fuzzyEngine.addObserver(observer);
 	}
     @Override
     public MOVE getMove(Game game, long timeDue) {
