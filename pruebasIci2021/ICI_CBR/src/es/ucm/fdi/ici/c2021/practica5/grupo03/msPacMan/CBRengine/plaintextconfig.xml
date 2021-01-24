@@ -1,0 +1,56 @@
+<TextFileConfiguration>
+	<FilePath>es/ucm/fdi/ici/c2021/practica5/grupo03/data/generalcasebase.txt</FilePath>
+	<Delimiters>,</Delimiters>
+	<DescriptionClassName>es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.CBRengine.MsPacManDescription</DescriptionClassName>
+	<DescriptionMappings>
+		<Map>id</Map>
+		<Map>distanceInky</Map>
+		<Map>distancePinky</Map>
+		<Map>distanceSue</Map>		
+		<Map>distanceBlinky</Map>
+				
+		<Map>timeEdibleInky</Map>
+		<Map>timeEdiblePinky</Map>
+		<Map>timeEdibleSue</Map>
+		<Map>timeEdibleBlinky</Map>
+		
+		<Map>chasedByInky</Map>		
+		<Map>chasedByPinky</Map>		
+		<Map>chasedBySue</Map>
+		<Map>chasedByBlinky</Map>
+		
+		<Map>distanceInterUp</Map>
+		<Map>distanceInterDown</Map>		
+		<Map>distanceInterLeft</Map>		
+		<Map>distanceInterRight</Map>
+		
+		<Map>numPillsUp</Map>
+		<Map>numPillsDown</Map>
+		<Map>numPillsLeft</Map>
+		<Map>numPillsRight</Map>	
+			
+		<Map>indexI</Map>
+		<Map>indexS</Map>
+		<Map>indexB</Map>
+		<Map>indexP</Map>	
+			
+		<Map>pacManIndex</Map>
+		<Map>lifes</Map>
+		<Map>pillsEated</Map>	
+
+		<Map>lastDir</Map>		
+		<Map>ghostEaten</Map>
+		<Map>nLevel</Map>	
+				
+	</DescriptionMappings>
+	<SolutionClassName>es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.CBRengine.MsPacManSolution</SolutionClassName>
+	<SolutionMappings>
+		<Map>id</Map>
+		<Map>move</Map>
+	</SolutionMappings>
+	<ResultClassName>es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.CBRengine.MsPacManResult</ResultClassName>
+	<ResultMappings>
+		<Map>id</Map>
+		<Map>score</Map>
+	</ResultMappings>
+</TextFileConfiguration>

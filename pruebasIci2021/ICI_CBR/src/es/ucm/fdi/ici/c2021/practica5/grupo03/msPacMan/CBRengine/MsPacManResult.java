@@ -1,12 +1,13 @@
-package es.ucm.fdi.ici.practica5.CBRengine;
+package es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.CBRengine;
 
 import es.ucm.fdi.gaia.jcolibri.cbrcore.Attribute;
+
 import es.ucm.fdi.gaia.jcolibri.cbrcore.CaseComponent;
 
 public class MsPacManResult implements CaseComponent, Cloneable {
 
 	Integer id;
-	Integer score;
+	double score;
 	
 	public Integer getId() {
 		return id;
@@ -16,11 +17,11 @@ public class MsPacManResult implements CaseComponent, Cloneable {
 		this.id = id;
 	}
 
-	public Integer getScore() {
+	public double getScore() {
 		return score;
 	}
 
-	public void setScore(Integer score) {
+	public void setScore(double score) {
 		this.score = score;
 	}
 

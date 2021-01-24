@@ -1,4 +1,4 @@
-package es.ucm.fdi.ici.practica5;
+package es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan;
 
 import java.util.HashMap;
 import java.util.List;

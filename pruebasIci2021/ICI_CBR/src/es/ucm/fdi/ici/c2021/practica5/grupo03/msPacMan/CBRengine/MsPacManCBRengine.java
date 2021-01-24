@@ -1,6 +1,7 @@
-package es.ucm.fdi.ici.practica5.CBRengine;
+package es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.CBRengine;
 
 import java.io.File;
+import java.util.Random;
 import java.util.Collection;
 
 import es.ucm.fdi.gaia.jcolibri.cbraplications.StandardCBRApplication;
@@ -18,23 +19,26 @@ import es.ucm.fdi.gaia.jcolibri.method.retrieve.NNretrieval.similarity.local.Equ
 import es.ucm.fdi.gaia.jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
 import es.ucm.fdi.gaia.jcolibri.method.retrieve.selection.SelectCases;
 import es.ucm.fdi.gaia.jcolibri.util.FileIO;
-import es.ucm.fdi.ici.practica5.Action;
-import es.ucm.fdi.ici.practica5.MsPacManActionSelector;
+import es.ucm.fdi.ici.c2021.practica5.grupo03.customSimFunctions.globalEqualFun;
+import es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.Action;
+import es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.MsPacManActionSelector;
+import pacman.game.Constants.MOVE;
 
 public class MsPacManCBRengine implements StandardCBRApplication {
 
 	private String casebaseFile;
-	private Action action;
-	private MsPacManActionSelector actionSelector;
+	MOVE move;
 	private MsPacManStorageManager storageManager;
 
+	private Random rnd = new Random();
+	
 	CustomPlainTextConnector connector;
 	CBRCaseBase caseBase;
 	NNConfig simConfig;
 	
 	
 	
-	final static String CONNECTOR_FILE_PATH = "es/ucm/fdi/ici/practica5/CBRengine/plaintextconfig.xml"; //Cuidado!! poner el grupo aquí
+	final static String CONNECTOR_FILE_PATH = "es/ucm/fdi/ici/c2021/practica5/grupo03/msPacMan/CBRengine/plaintextconfig.xml"; //Cuidado!! poner el grupo aquí
 
 	/**
 	 * Simple extension to allow custom case base files. It also creates a new empty file if it does not exist.
@@ -54,9 +58,8 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 	}
 	
 	
-	public MsPacManCBRengine(MsPacManActionSelector actionSelector, MsPacManStorageManager storageManager)
+	public MsPacManCBRengine( MsPacManStorageManager storageManager)
 	{
-		this.actionSelector = actionSelector;
 		this.storageManager = storageManager;
 	}
 	
@@ -74,12 +77,44 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 		this.storageManager.setCaseBase(caseBase);
 		
 		simConfig = new NNConfig();
-		simConfig.setDescriptionSimFunction(new Average());
-		simConfig.addMapping(new Attribute("score",MsPacManDescription.class), new Interval(15000));
-		simConfig.addMapping(new Attribute("time",MsPacManDescription.class), new Interval(4000));
-		simConfig.addMapping(new Attribute("nearestPPill",MsPacManDescription.class), new Interval(650));
-		simConfig.addMapping(new Attribute("nearestGhost",MsPacManDescription.class), new Interval(650));
-		simConfig.addMapping(new Attribute("edibleGhost",MsPacManDescription.class), new Equal());
+		simConfig.setDescriptionSimFunction(new globalEqualFun());
+		
+		simConfig.addMapping(new Attribute("lastDir",MsPacManDescription.class), new Equal());
+		simConfig.addMapping(new Attribute("nLevel",MsPacManDescription.class), new Equal());
+		
+		simConfig.addMapping(new Attribute("distanceInky",MsPacManDescription.class), new Interval(300));
+		simConfig.addMapping(new Attribute("distancePinky",MsPacManDescription.class), new Interval(300));
+		simConfig.addMapping(new Attribute("distanceSue",MsPacManDescription.class), new Interval(300));
+		simConfig.addMapping(new Attribute("distanceBlinky",MsPacManDescription.class), new Interval(300));
+		
+		simConfig.addMapping(new Attribute("timeEdibleInky",MsPacManDescription.class), new Interval(200));
+		simConfig.addMapping(new Attribute("timeEdiblePinky",MsPacManDescription.class), new Interval(200));
+		simConfig.addMapping(new Attribute("timeEdibleSue",MsPacManDescription.class), new Interval(200));
+		simConfig.addMapping(new Attribute("timeEdibleBlinky",MsPacManDescription.class), new Interval(200));
+		
+		simConfig.addMapping(new Attribute("chasedByInky",MsPacManDescription.class), new Interval(4));
+		simConfig.addMapping(new Attribute("chasedByPinky",MsPacManDescription.class), new Interval(4));
+		simConfig.addMapping(new Attribute("chasedBySue",MsPacManDescription.class), new Interval(4));
+		simConfig.addMapping(new Attribute("chasedByBlinky",MsPacManDescription.class), new Interval(4));
+		
+		simConfig.addMapping(new Attribute("distanceInterUp",MsPacManDescription.class), new Interval(300));
+		simConfig.addMapping(new Attribute("distanceInterDown",MsPacManDescription.class), new Interval(300));
+		simConfig.addMapping(new Attribute("distanceInterLeft",MsPacManDescription.class), new Interval(300));
+		simConfig.addMapping(new Attribute("distanceInterRight",MsPacManDescription.class), new Interval(300));
+		
+		simConfig.addMapping(new Attribute("numPillsUp",MsPacManDescription.class), new Interval(50));
+		simConfig.addMapping(new Attribute("numPillsDown",MsPacManDescription.class), new Interval(50));
+		simConfig.addMapping(new Attribute("numPillsLeft",MsPacManDescription.class), new Interval(50));
+		simConfig.addMapping(new Attribute("numPillsRight",MsPacManDescription.class), new Interval(50));
+		
+		simConfig.addMapping(new Attribute("indexP",MsPacManDescription.class), new Interval(300));
+		simConfig.addMapping(new Attribute("indexI",MsPacManDescription.class), new Interval(300));
+		simConfig.addMapping(new Attribute("indexS",MsPacManDescription.class), new Interval(300));
+		simConfig.addMapping(new Attribute("indexB",MsPacManDescription.class), new Interval(300));
+		
+		simConfig.addMapping(new Attribute("pacManIndex",MsPacManDescription.class), new Interval(300));
+		
+
 		
 	}
 
@@ -92,7 +127,7 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 	@Override
 	public void cycle(CBRQuery query) throws ExecutionException {
 		if(caseBase.getCases().isEmpty()) {
-			this.action = actionSelector.findAction();
+			this.move = MOVE.values()[rnd.nextInt(MOVE.values().length)];;
 		}else {
 			//Compute NN
 			Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(caseBase.getCases(), query, simConfig);
@@ -107,13 +142,15 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 			MsPacManSolution solution = (MsPacManSolution) mostSimilarCase.getSolution();
 			
 			//Now compute a solution for the query
-			this.action = actionSelector.getAction(solution.getAction());
+			
+			move = MOVE.values()[solution.getMove()];
 			
 			if(similarity<0.7) //Sorry not enough similarity, ask actionSelector for an action
-				this.action = actionSelector.findAction();
-			
+				move = MOVE.values()[rnd.nextInt(MOVE.values().length)];
+				
 			else if(result.getScore()<0) //This was a bad case, ask actionSelector for another one.
-				this.action = actionSelector.findAnotherAction(solution.getAction());
+				move = MOVE.values()[rnd.nextInt(MOVE.values().length)];
+			
 		}
 		CBRCase newCase = createNewCase(query);
 		this.storageManager.storeCase(newCase);
@@ -135,15 +172,15 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 		newDescription.setId(newId);
 		newResult.setId(newId);
 		newSolution.setId(newId);
-		newSolution.setAction(this.action.getActionId());
+		newSolution.setMove(this.move.ordinal());
 		newCase.setDescription(newDescription);
 		newCase.setResult(newResult);
 		newCase.setSolution(newSolution);
 		return newCase;
 	}
 	
-	public Action getSolution() {
-		return this.action;
+	public MOVE getSolution() {
+		return this.move;
 	}
 
 	@Override
