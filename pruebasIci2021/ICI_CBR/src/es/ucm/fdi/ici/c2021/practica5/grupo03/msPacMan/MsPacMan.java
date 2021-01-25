@@ -18,7 +18,7 @@ public class MsPacMan extends PacmanController {
 	MsPacManCBRengine cbrEngine;
 	MsPacManStorageManager storageManager;
 	
-	final static String FILE_PATH = "cbrdata/grupo03/%s.csv"; //Cuidado!! poner el grupo aquí
+	final static String FILE_PATH = "cbrdata/grupo03/MsPacMan/%s.csv"; //Cuidado!! poner el grupo aquí
 	
 	public MsPacMan()
 	{
@@ -63,6 +63,7 @@ public class MsPacMan extends PacmanController {
 		try {
 			input.parseInput(game);
 			storageManager.setGame(game);
+			cbrEngine.setGame(game);
 			cbrEngine.cycle(input.getQuery());
 			MOVE move = cbrEngine.getSolution();
 			return move;

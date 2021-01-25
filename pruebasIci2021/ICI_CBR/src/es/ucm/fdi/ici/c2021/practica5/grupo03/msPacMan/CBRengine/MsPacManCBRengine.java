@@ -19,15 +19,19 @@ import es.ucm.fdi.gaia.jcolibri.method.retrieve.NNretrieval.similarity.local.Equ
 import es.ucm.fdi.gaia.jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
 import es.ucm.fdi.gaia.jcolibri.method.retrieve.selection.SelectCases;
 import es.ucm.fdi.gaia.jcolibri.util.FileIO;
+import es.ucm.fdi.ici.c2021.practica5.grupo03.customSimFunctions.IndexDist;
 import es.ucm.fdi.ici.c2021.practica5.grupo03.customSimFunctions.globalEqualFun;
 import es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.Action;
 import es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.MsPacManActionSelector;
 import pacman.game.Constants.MOVE;
+import pacman.game.Game;
 
 public class MsPacManCBRengine implements StandardCBRApplication {
 
 	private String casebaseFile;
 	MOVE move;
+	Game game;
+	IndexDist indD;
 	private MsPacManStorageManager storageManager;
 
 	private Random rnd = new Random();
@@ -76,6 +80,7 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 		connector.setCaseBaseFile(this.casebaseFile);
 		this.storageManager.setCaseBase(caseBase);
 		
+		indD = new IndexDist(30);
 		simConfig = new NNConfig();
 		simConfig.setDescriptionSimFunction(new globalEqualFun());
 		
@@ -107,15 +112,18 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 		simConfig.addMapping(new Attribute("numPillsLeft",MsPacManDescription.class), new Interval(50));
 		simConfig.addMapping(new Attribute("numPillsRight",MsPacManDescription.class), new Interval(50));
 		
-		simConfig.addMapping(new Attribute("indexP",MsPacManDescription.class), new Interval(300));
-		simConfig.addMapping(new Attribute("indexI",MsPacManDescription.class), new Interval(300));
-		simConfig.addMapping(new Attribute("indexS",MsPacManDescription.class), new Interval(300));
-		simConfig.addMapping(new Attribute("indexB",MsPacManDescription.class), new Interval(300));
+		simConfig.addMapping(new Attribute("indexP",MsPacManDescription.class), indD);
+		simConfig.addMapping(new Attribute("indexI",MsPacManDescription.class), indD);
+		simConfig.addMapping(new Attribute("indexS",MsPacManDescription.class), indD);
+		simConfig.addMapping(new Attribute("indexB",MsPacManDescription.class), indD);
 		
-		simConfig.addMapping(new Attribute("pacManIndex",MsPacManDescription.class), new Interval(300));
-		
+		simConfig.addMapping(new Attribute("pacManIndex",MsPacManDescription.class), indD);	
 
 		
+	}
+	
+	public void setGame(Game g) {
+		game = g;
 	}
 
 	@Override
@@ -129,6 +137,9 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 		if(caseBase.getCases().isEmpty()) {
 			this.move = MOVE.values()[rnd.nextInt(MOVE.values().length)];;
 		}else {
+			//Seteamos el game para la distancia entre indices
+			indD.setGame(game);
+			
 			//Compute NN
 			Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(caseBase.getCases(), query, simConfig);
 			
