@@ -28,15 +28,21 @@ import pacman.game.Game;
 
 public class MsPacManCBRengine implements StandardCBRApplication {
 
+	private String specificFile;
 	private String casebaseFile;
+	
+	
 	MOVE move;
 	Game game;
 	IndexDist indD;
 	private MsPacManStorageManager storageManager;
+	private MsPacManStorageManager storageManagerBase;
 
 	private Random rnd = new Random();
 	
-	CustomPlainTextConnector connector;
+	CustomPlainTextConnector connectorSpecific;
+	CustomPlainTextConnector connectorBase;
+	CBRCaseBase specificCases;
 	CBRCaseBase caseBase;
 	NNConfig simConfig;
 	
@@ -48,10 +54,10 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 	 * Simple extension to allow custom case base files. It also creates a new empty file if it does not exist.
 	 */
 	public class CustomPlainTextConnector extends PlainTextConnector {
-		public void setCaseBaseFile(String casebaseFile) {
-			super.PROP_FILEPATH = casebaseFile;
+		public void setCaseBaseFile(String specificFile) {
+			super.PROP_FILEPATH = specificFile;
 			try {
-		         File file = new File(casebaseFile);
+		         File file = new File(specificFile);
 		         System.out.println(file.getAbsolutePath());
 		         if(!file.exists())
 		        	 file.createNewFile();
@@ -62,23 +68,32 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 	}
 	
 	
-	public MsPacManCBRengine( MsPacManStorageManager storageManager)
+	public MsPacManCBRengine( MsPacManStorageManager storageManager,  MsPacManStorageManager baseStorageManager)
 	{
 		this.storageManager = storageManager;
+		this.storageManagerBase = baseStorageManager;
 	}
 	
-	public void setCaseBaseFile(String casebaseFile) {
-		this.casebaseFile = casebaseFile;
+	public void setCaseBaseFile(String filepath, String opponent) {
+		this.specificFile = String.format(filepath, opponent);
+		this.casebaseFile = String.format(filepath, "casosBase");
 	}
 	
 	@Override
 	public void configure() throws ExecutionException {
-		connector = new CustomPlainTextConnector();
+		connectorSpecific = new CustomPlainTextConnector();
+		connectorBase = new CustomPlainTextConnector();
+		
+		specificCases = new CachedLinearCaseBase();
 		caseBase = new CachedLinearCaseBase();
 		
-		connector.initFromXMLfile(FileIO.findFile(CONNECTOR_FILE_PATH));
-		connector.setCaseBaseFile(this.casebaseFile);
-		this.storageManager.setCaseBase(caseBase);
+		connectorBase.initFromXMLfile(FileIO.findFile(CONNECTOR_FILE_PATH));
+		connectorBase.setCaseBaseFile(this.casebaseFile);
+		this.storageManagerBase.setCaseBase(caseBase);
+		
+		connectorSpecific.initFromXMLfile(FileIO.findFile(CONNECTOR_FILE_PATH));
+		connectorSpecific.setCaseBaseFile(this.specificFile);
+		this.storageManager.setCaseBase(specificCases);
 		
 		indD = new IndexDist(30);
 		simConfig = new NNConfig();
@@ -128,43 +143,83 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 
 	@Override
 	public CBRCaseBase preCycle() throws ExecutionException {
-		caseBase.init(connector);
-		return caseBase;
+		specificCases.init(connectorSpecific);
+		caseBase.init(connectorBase);
+		return specificCases;
 	}
 
 	@Override
 	public void cycle(CBRQuery query) throws ExecutionException {
-		if(caseBase.getCases().isEmpty()) {
-			this.move = MOVE.values()[rnd.nextInt(MOVE.values().length)];;
+		indD.setGame(game);
+		if(specificCases.getCases().isEmpty() && caseBase.getCases().isEmpty()) {
+			this.move = getPosibleRandomMove();
+		}else if (!specificCases.getCases().isEmpty()){
+			casosBase(query, specificCases, 0.7f, 0.0f, 5, 0.5f, 0.5f);			
 		}else {
-			//Seteamos el game para la distancia entre indices
-			indD.setGame(game);
-			
-			//Compute NN
-			Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(caseBase.getCases(), query, simConfig);
-			
-			// This simple implementation only uses 1NN
-			// Consider using kNNs with majority voting
-			RetrievalResult first = SelectCases.selectTopKRR(eval, 1).iterator().next();
-			CBRCase mostSimilarCase = first.get_case();
-			double similarity = first.getEval();
-	
-			MsPacManResult result = (MsPacManResult) mostSimilarCase.getResult();
-			MsPacManSolution solution = (MsPacManSolution) mostSimilarCase.getSolution();
-			
-			//Now compute a solution for the query
-			
-			move = MOVE.values()[solution.getMove()];
-			
-			if(similarity<0.7) //Sorry not enough similarity, ask actionSelector for an action
-				move = MOVE.values()[rnd.nextInt(MOVE.values().length)];
-				
-			else if(result.getScore()<0) //This was a bad case, ask actionSelector for another one.
-				move = MOVE.values()[rnd.nextInt(MOVE.values().length)];
-			
+			casosBase(query, caseBase, 0.7f, 0.0f, 10,  0.5f, 0.5f);
 		}
-		CBRCase newCase = createNewCase(query);
+		CBRCase newCase = createNewCase(query, specificCases, this.storageManager);
 		this.storageManager.storeCase(newCase);
+		
+		newCase = createNewCase(query, caseBase, this.storageManagerBase);
+		this.storageManagerBase.storeCase(newCase);
+		
+	}
+	
+	private MOVE getPosibleRandomMove() {
+		MOVE[] m = game.getPossibleMoves(game.getPacmanCurrentNodeIndex(), game.getPacmanLastMoveMade());
+		return m[rnd.nextInt(m.length)];
+	}
+	
+	/**
+	 * Dado un CBR se escogen los NN casos mas relevantes y se calcula cual de ellos va a ser el mejor
+	 * a partir de la similitud*p1 + resultado*p2. Si la similitud es menor que sim o el resultado es
+	 * menor que res, se desecha la posible solucion
+	 * @param cbrC CBR
+	 * @param sim grado de similitud
+	 * @param res peor resultado pasable
+	 * @param NN casos parecidos
+	 * @param p1 peso de la similitud
+	 * @param p2 peso del resultado
+	 */
+	private void casosBase(CBRQuery query, CBRCaseBase cbrC, float sim, float res, int NN, float p1, float p2){
+		//Compute NN
+		Collection<RetrievalResult> eval = ParallelNNScoringMethod.evaluateSimilarityParallel(cbrC.getCases(), query, simConfig);		
+		
+		MsPacManResult result = null;
+		MsPacManSolution solution = null;
+		double similarity;
+		double valor = 0, aux = 0;
+		CBRCase bestCase = null;
+		
+		Collection<RetrievalResult> nCases = SelectCases.selectTopKRR(eval, NN);
+		
+		//Buscamos dentro de los NN mas similares, cual es el mejor posible
+		for(int i = 0; i < NN; i ++) {
+			RetrievalResult first = nCases.iterator().next();
+			CBRCase simCase = first.get_case();
+			similarity = first.getEval();
+			result = (MsPacManResult) simCase.getResult();
+			if(similarity < sim || result.score < res)
+				continue;
+	
+			solution = (MsPacManSolution) simCase.getSolution();
+			aux = similarity*p1 + result.score*p1;
+			if(valor < aux) {
+				valor = aux;
+				bestCase = simCase;
+			}
+			
+		}		
+		
+		if(bestCase == null)
+			move = getPosibleRandomMove();
+		else {
+			solution = (MsPacManSolution) bestCase.getSolution();
+			move = MOVE.values()[solution.getMove()];
+		}
+			
+		//Now compute a solution for the query	
 		
 	}
 
@@ -173,13 +228,13 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 	 * storing the action into the solution and 
 	 * setting the proper id number
 	 */
-	private CBRCase createNewCase(CBRQuery query) {
+	private CBRCase createNewCase(CBRQuery query, CBRCaseBase c, MsPacManStorageManager st) {
 		CBRCase newCase = new CBRCase();
 		MsPacManDescription newDescription = (MsPacManDescription) query.getDescription();
 		MsPacManResult newResult = new MsPacManResult();
 		MsPacManSolution newSolution = new MsPacManSolution();
-		int newId = this.caseBase.getCases().size();
-		newId+= storageManager.getPendingCases();
+		int newId = c.getCases().size();
+		newId+= st.getPendingCases();
 		newDescription.setId(newId);
 		newResult.setId(newId);
 		newSolution.setId(newId);
@@ -197,6 +252,8 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 	@Override
 	public void postCycle() throws ExecutionException {
 		this.storageManager.close();
+		this.storageManagerBase.close();
+		this.specificCases.close();
 		this.caseBase.close();
 	}
 
