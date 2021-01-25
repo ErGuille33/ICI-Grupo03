@@ -4,7 +4,6 @@
     <fullyQualifiedTypeName name="java.util.EnumMap"/>
     <fullyQualifiedTypeName name="pacman.game.Constants.MOVE"/>
     <fullyQualifiedTypeName name="java.util.Random"/>
-    <fullyQualifiedTypeName name="pacman.game.Game"/>
     <fullyQualifiedTypeName name="pacman.controllers.KeyBoardInput"/>
     <fullyQualifiedTypeName name="pacman.controllers.HumanController"/>
     <fullyQualifiedTypeName name="pacman.controllers.PacmanController"/>
@@ -28,7 +27,10 @@
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica4.grupo03.ghosts.GhostsInput"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica4.grupo03.ghosts.actions.MiddlePath"/>
     <fullyQualifiedTypeName name="pacman.game.Constants.GHOST"/>
-    <fullyQualifiedTypeName name="pacman.game.Constants.DM"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica4.grupo03.ghosts.actions.FindPacman"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica4.grupo03.Ghosts"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.gaia.jcolibri.method.retrieve.NNretrieval.similarity.LocalSimilarityFunction"/>
+    <fullyQualifiedTypeName name="pacman.game.Constants.DM"/>
+    <fullyQualifiedTypeName name="pacman.game.Game"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica5.grupo03.customSimFunctions.IndexDist"/>
 </qualifiedTypeNameHistroy>
