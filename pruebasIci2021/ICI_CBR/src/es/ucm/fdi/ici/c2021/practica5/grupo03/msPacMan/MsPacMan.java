@@ -17,6 +17,7 @@ public class MsPacMan extends PacmanController {
 	MsPacManInput input;
 	MsPacManCBRengine cbrEngine;
 	MsPacManStorageManager storageManager;
+	MsPacManStorageManager baseStorageManager;
 	
 	final static String FILE_PATH = "cbrdata/grupo03/MsPacMan/%s.csv"; //Cuidado!! poner el grupo aquí
 	
@@ -25,13 +26,14 @@ public class MsPacMan extends PacmanController {
 		this.input = new MsPacManInput();
 
 		this.storageManager = new MsPacManStorageManager();
+		this.baseStorageManager = new MsPacManStorageManager();
 		
-		cbrEngine = new MsPacManCBRengine( storageManager);
+		cbrEngine = new MsPacManCBRengine( storageManager, baseStorageManager);
 	}
 	
 	@Override
 	public void preCompute(String opponent) {
-		cbrEngine.setCaseBaseFile(String.format(FILE_PATH, opponent));
+		cbrEngine.setCaseBaseFile(FILE_PATH, opponent);
 		try {
 			cbrEngine.configure();
 			cbrEngine.preCycle();
@@ -57,12 +59,12 @@ public class MsPacMan extends PacmanController {
 		//This implementation only computes a new action when MsPacMan is in a junction. 
 		//This is relevant for the case storage policy
 		if(!game.isJunction(game.getPacmanCurrentNodeIndex()))
-			return MOVE.NEUTRAL;
-		
+			return MOVE.NEUTRAL;		
 		
 		try {
 			input.parseInput(game);
 			storageManager.setGame(game);
+			baseStorageManager.setGame(game);
 			cbrEngine.setGame(game);
 			cbrEngine.cycle(input.getQuery());
 			MOVE move = cbrEngine.getSolution();
