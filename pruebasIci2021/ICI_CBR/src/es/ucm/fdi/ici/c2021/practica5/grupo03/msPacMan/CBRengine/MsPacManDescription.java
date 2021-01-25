@@ -6,365 +6,298 @@ import es.ucm.fdi.gaia.jcolibri.cbrcore.CaseComponent;
 public class MsPacManDescription implements CaseComponent {
 
 	Integer id;
-	
-	double distanceInky;
-	double distancePinky;
-	double distanceSue;
-	double distanceBlinky;
-	
-	double timeEdibleInky;
-	double timeEdiblePinky;
-	double timeEdibleSue;
-	double timeEdibleBlinky;
-	
-	int chasedByInky;
-	int chasedByPinky;
-	int chasedBySue;
-	int chasedByBlinky;
-	
-	double distanceInterUp;
-	double distanceInterDown; 
-	double distanceInterLeft;
-	double distanceInterRight;
-	
-	int numPillsUp;
-	int numPillsDown; //Hasta la siguiente intersección
-	int numPillsLeft;
-	int numPillsRight;
-	
-	int indexP;
-	int indexI;  //Indice del nodo de posicion de cada fantasma
-	int indexS;
-	int indexB;
-	
-	int pacManIndex;
 
-	int lifes;
-	int pillsEated;
-	
-	int lastDir;
-	int ghostEaten;
-	int nLevel;
-	
-	
-	public int getGhostEaten() {
-		return ghostEaten;
-	}
+	Double distanceInky;
+	Double distancePinky;
+	Double distanceSue;
+	Double distanceBlinky;
 
+	Integer timeEdibleInky;
+	Integer timeEdiblePinky;
+	Integer timeEdibleSue;
+	Integer timeEdibleBlinky;
 
-	public void setGhostEaten(int ghostEaten) {
-		this.ghostEaten = ghostEaten;
-	}
+	Integer chasedByInky;
+	Integer chasedByPinky;
+	Integer chasedBySue;
+	Integer chasedByBlinky;
 
+	Double distanceInterUp;
+	Double distanceInterDown;
+	Double distanceInterLeft;
+	Double distanceInterRight;
 
-	public int getPillsEated() {
-		return pillsEated;
-	}
+	Integer numPillsUp;
+	Integer numPillsDown; // Hasta la siguiente intersección
+	Integer numPillsLeft;
+	Integer numPillsRight;
 
+	Integer indexP;
+	Integer indexI; // Indice del nodo de posicion de cada fantasma
+	Integer indexS;
+	Integer indexB;
 
-	public void setPillsEated(int pillsEated) {
-		this.pillsEated = pillsEated;
-	}
+	Integer pacManIndex;
 
+	Integer lifes;
+	Integer pillsEated;
 
-
-	
-
-	public int getLifes() {
-		return lifes;
-	}
-
-
-	public void setLifes(int lifes) {
-		this.lifes = lifes;
-	}
-
+	Integer lastDir;
+	Integer ghostEaten;
+	Integer nLevel;
 
 	@Override
 	public Attribute getIdAttribute() {
 		return new Attribute("id", MsPacManDescription.class);
 	}
 
-
 	public Integer getId() {
 		return id;
 	}
-
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-
-	public double getDistanceInky() {
+	public Double getDistanceInky() {
 		return distanceInky;
 	}
 
-
-	public void setDistanceInky(double distanceInky) {
+	public void setDistanceInky(Double distanceInky) {
 		this.distanceInky = distanceInky;
 	}
 
-
-	public double getDistancePinky() {
+	public Double getDistancePinky() {
 		return distancePinky;
 	}
 
-
-	public void setDistancePinky(double distancePinky) {
+	public void setDistancePinky(Double distancePinky) {
 		this.distancePinky = distancePinky;
 	}
 
-
-	public double getDistanceSue() {
+	public Double getDistanceSue() {
 		return distanceSue;
 	}
 
-
-	public void setDistanceSue(double distanceSue) {
+	public void setDistanceSue(Double distanceSue) {
 		this.distanceSue = distanceSue;
 	}
 
-
-	public double getDistanceBlinky() {
+	public Double getDistanceBlinky() {
 		return distanceBlinky;
 	}
 
-
-	public void setDistanceBlinky(double distanceBlinky) {
+	public void setDistanceBlinky(Double distanceBlinky) {
 		this.distanceBlinky = distanceBlinky;
 	}
 
-
-	public double getTimeEdibleInky() {
+	public Integer getTimeEdibleInky() {
 		return timeEdibleInky;
 	}
 
-
-	public void setTimeEdibleInky(double timeEdibleInky) {
+	public void setTimeEdibleInky(Integer timeEdibleInky) {
 		this.timeEdibleInky = timeEdibleInky;
 	}
 
-
-	public double getTimeEdiblePinky() {
+	public Integer getTimeEdiblePinky() {
 		return timeEdiblePinky;
 	}
 
-
-	public void setTimeEdiblePinky(double timeEdiblePinky) {
+	public void setTimeEdiblePinky(Integer timeEdiblePinky) {
 		this.timeEdiblePinky = timeEdiblePinky;
 	}
 
-
-	public double getTimeEdibleSue() {
+	public Integer getTimeEdibleSue() {
 		return timeEdibleSue;
 	}
 
-
-	public void setTimeEdibleSue(double timeEdibleSue) {
+	public void setTimeEdibleSue(Integer timeEdibleSue) {
 		this.timeEdibleSue = timeEdibleSue;
 	}
 
-
-	public double getTimeEdibleBlinky() {
+	public Integer getTimeEdibleBlinky() {
 		return timeEdibleBlinky;
 	}
 
-
-	public void setTimeEdibleBlinky(double timeEdibleBlinky) {
+	public void setTimeEdibleBlinky(Integer timeEdibleBlinky) {
 		this.timeEdibleBlinky = timeEdibleBlinky;
 	}
 
-
-	public int isChasedByInky() {
+	public Integer getChasedByInky() {
 		return chasedByInky;
 	}
 
-
-	public void setChasedByInky(int chasedByInky) {
+	public void setChasedByInky(Integer chasedByInky) {
 		this.chasedByInky = chasedByInky;
 	}
 
-
-	public int isChasedByPinky() {
+	public Integer getChasedByPinky() {
 		return chasedByPinky;
 	}
 
-
-	public void setChasedByPinky(int chasedByPinky) {
+	public void setChasedByPinky(Integer chasedByPinky) {
 		this.chasedByPinky = chasedByPinky;
 	}
 
-
-	public int isChasedBySue() {
+	public Integer getChasedBySue() {
 		return chasedBySue;
 	}
 
-
-	public void setChasedBySue(int chasedBySue) {
+	public void setChasedBySue(Integer chasedBySue) {
 		this.chasedBySue = chasedBySue;
 	}
 
-
-	public int isChasedByBlinky() {
+	public Integer getChasedByBlinky() {
 		return chasedByBlinky;
 	}
 
-
-	public void setChasedByBlinky(int chasedByBlinky) {
+	public void setChasedByBlinky(Integer chasedByBlinky) {
 		this.chasedByBlinky = chasedByBlinky;
 	}
 
-
-	public double getDistanceInterUp() {
+	public Double getDistanceInterUp() {
 		return distanceInterUp;
 	}
 
-
-	public void setDistanceInterUp(double distanceInterUp) {
+	public void setDistanceInterUp(Double distanceInterUp) {
 		this.distanceInterUp = distanceInterUp;
 	}
 
-
-	public double getDistanceInterDown() {
+	public Double getDistanceInterDown() {
 		return distanceInterDown;
 	}
 
-
-	public void setDistanceInterDown(double distanceInterDown) {
+	public void setDistanceInterDown(Double distanceInterDown) {
 		this.distanceInterDown = distanceInterDown;
 	}
 
-
-	public double getDistanceInterLeft() {
+	public Double getDistanceInterLeft() {
 		return distanceInterLeft;
 	}
 
-
-	public void setDistanceInterLeft(double distanceInterLeft) {
+	public void setDistanceInterLeft(Double distanceInterLeft) {
 		this.distanceInterLeft = distanceInterLeft;
 	}
 
-
-	public double getDistanceInterRight() {
+	public Double getDistanceInterRight() {
 		return distanceInterRight;
 	}
 
-
-	public void setDistanceInterRight(double distanceInterRight) {
+	public void setDistanceInterRight(Double distanceInterRight) {
 		this.distanceInterRight = distanceInterRight;
 	}
 
-
-	public int getNumPillsUp() {
+	public Integer getNumPillsUp() {
 		return numPillsUp;
 	}
 
-
-	public void setNumPillsUp(int numPillsUp) {
+	public void setNumPillsUp(Integer numPillsUp) {
 		this.numPillsUp = numPillsUp;
 	}
 
-
-	public int getNumPillsDown() {
+	public Integer getNumPillsDown() {
 		return numPillsDown;
 	}
 
-
-	public void setNumPillsDown(int numPillsDown) {
+	public void setNumPillsDown(Integer numPillsDown) {
 		this.numPillsDown = numPillsDown;
 	}
 
-
-	public int getNumPillsLeft() {
+	public Integer getNumPillsLeft() {
 		return numPillsLeft;
 	}
 
-
-	public void setNumPillsLeft(int numPillsLeft) {
+	public void setNumPillsLeft(Integer numPillsLeft) {
 		this.numPillsLeft = numPillsLeft;
 	}
 
-
-	public int getNumPillsRight() {
+	public Integer getNumPillsRight() {
 		return numPillsRight;
 	}
 
-
-	public void setNumPillsRight(int numPillsRight) {
+	public void setNumPillsRight(Integer numPillsRight) {
 		this.numPillsRight = numPillsRight;
 	}
 
-
-	public int getLastDir() {
-		return lastDir;
-	}
-
-
-	public void setLastDir(int lastDir) {
-		this.lastDir = lastDir;
-	}
-
-
-	public int getIndexP() {
+	public Integer getIndexP() {
 		return indexP;
 	}
 
-
-	public void setIndexP(int indexP) {
+	public void setIndexP(Integer indexP) {
 		this.indexP = indexP;
 	}
 
-
-	public int getIndexI() {
+	public Integer getIndexI() {
 		return indexI;
 	}
 
-
-	public void setIndexI(int indexI) {
+	public void setIndexI(Integer indexI) {
 		this.indexI = indexI;
 	}
 
-
-	public int getIndexS() {
+	public Integer getIndexS() {
 		return indexS;
 	}
 
-
-	public void setIndexS(int indexS) {
+	public void setIndexS(Integer indexS) {
 		this.indexS = indexS;
 	}
 
-
-	public int getIndexB() {
+	public Integer getIndexB() {
 		return indexB;
 	}
 
-
-	public void setIndexB(int indexB) {
+	public void setIndexB(Integer indexB) {
 		this.indexB = indexB;
 	}
 
-
-	public int getPacManIndex() {
+	public Integer getPacManIndex() {
 		return pacManIndex;
 	}
 
-
-	public void setPacManIndex(int pacManIndex) {
+	public void setPacManIndex(Integer pacManIndex) {
 		this.pacManIndex = pacManIndex;
 	}
 
+	public Integer getLifes() {
+		return lifes;
+	}
 
-	public int getNLevel() {
+	public void setLifes(Integer lifes) {
+		this.lifes = lifes;
+	}
+
+	public Integer getPillsEated() {
+		return pillsEated;
+	}
+
+	public void setPillsEated(Integer pillsEated) {
+		this.pillsEated = pillsEated;
+	}
+
+	public Integer getLastDir() {
+		return lastDir;
+	}
+
+	public void setLastDir(Integer lastDir) {
+		this.lastDir = lastDir;
+	}
+
+	public Integer getGhostEaten() {
+		return ghostEaten;
+	}
+
+	public void setGhostEaten(Integer ghostEaten) {
+		this.ghostEaten = ghostEaten;
+	}
+
+	public Integer getNLevel() {
 		return nLevel;
 	}
 
-
-	public void setNLevel(int nLevel) {
+	public void setNLevel(Integer nLevel) {
 		this.nLevel = nLevel;
 	}
-
 
 	@Override
 	public String toString() {
@@ -380,9 +313,5 @@ public class MsPacManDescription implements CaseComponent {
 				+ indexI + ", indexS=" + indexS + ", indexB=" + indexB + ", pacManIndex=" + pacManIndex + ", nLevel="
 				+ nLevel + "]";
 	}
-
-	
-	
-	
 
 }

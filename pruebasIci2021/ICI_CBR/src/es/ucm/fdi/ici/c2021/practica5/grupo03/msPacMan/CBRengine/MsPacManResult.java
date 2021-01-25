@@ -7,7 +7,7 @@ import es.ucm.fdi.gaia.jcolibri.cbrcore.CaseComponent;
 public class MsPacManResult implements CaseComponent, Cloneable {
 
 	Integer id;
-	double score;
+	Double score;
 	
 	public Integer getId() {
 		return id;
@@ -17,11 +17,11 @@ public class MsPacManResult implements CaseComponent, Cloneable {
 		this.id = id;
 	}
 
-	public double getScore() {
+	public Double getScore() {
 		return score;
 	}
 
-	public void setScore(double score) {
+	public void setScore(Double score) {
 		this.score = score;
 	}
 

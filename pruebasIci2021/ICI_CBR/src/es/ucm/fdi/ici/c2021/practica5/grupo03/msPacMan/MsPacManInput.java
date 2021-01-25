@@ -13,43 +13,43 @@ public class MsPacManInput implements Input {
 
 	Integer nearestGhost;
 	
-	double distanceBlinky;
-	double distanceInky;
-	double distancePinky;
-	double distanceSue;
+	Double distanceBlinky;
+	Double distanceInky;
+	Double distancePinky;
+	Double distanceSue;
 	
-	double distanceInterUp = 0;
-	double distanceInterDown = 0; 
-	double distanceInterLeft = 0;
-	double distanceInterRight= 0;
+	Double distanceInterUp = 0.0;
+	Double distanceInterDown = 0.0; 
+	Double distanceInterLeft = 0.0;
+	Double distanceInterRight= 0.0;
 	
-	double timeEdibleInky;
-	double timeEdiblePinky;
-	double timeEdibleSue;
-	double timeEdibleBlinky;
+	Integer timeEdibleInky;
+	Integer timeEdiblePinky;
+	Integer timeEdibleSue;
+	Integer timeEdibleBlinky;
 	
-	int chasedByInky = 0;
-	int chasedByPinky= 0;
-	int chasedBySue= 0;
-	int chasedByBlinky= 0;
+	Integer chasedByInky = 0;
+	Integer chasedByPinky= 0;
+	Integer chasedBySue= 0;
+	Integer chasedByBlinky= 0;
 	
-	int numPillsUp;
-	int numPillsDown; //Hasta la siguiente intersección
-	int numPillsLeft;
-	int numPillsRight;
+	Integer numPillsUp;
+	Integer numPillsDown; //Hasta la siguiente intersección
+	Integer numPillsLeft;
+	Integer numPillsRight;
 	
-	int nLevel;
-	int lastDir;
+	Integer nLevel;
+	Integer lastDir;
 	
-	int indexI;  //Indice del nodo de posicion de cada fantasma
-	int indexS;
-	int indexB;
-	int indexP;
+	Integer indexI;  //Indice del nodo de posicion de cada fantasma
+	Integer indexS;
+	Integer indexB;
+	Integer indexP;
 	
-	int pacManIndex;
-	int pillsEated;
-	int ghostEaten;
-	int lifes;
+	Integer pacManIndex;
+	Integer pillsEated;
+	Integer ghostEaten;
+	Integer lifes;
 
 	
 
@@ -114,6 +114,8 @@ public class MsPacManInput implements Input {
 		description.setLastDir(lastDir);
 		description.setGhostEaten(ghostEaten);
 		description.setNLevel(nLevel);
+		
+		description.setLifes(lifes);
 				
 		CBRQuery query = new CBRQuery();
 		query.setDescription(description);
