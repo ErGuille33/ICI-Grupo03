@@ -1,6 +1,7 @@
-package es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.CBRengine;
+package es.ucm.fdi.ici.c2021.practica5.grupo03.ghost.CBRengine;
 
 import java.io.File;
+
 import java.util.Random;
 import java.util.Collection;
 
@@ -14,24 +15,26 @@ import es.ucm.fdi.gaia.jcolibri.exception.ExecutionException;
 import es.ucm.fdi.gaia.jcolibri.method.retrieve.RetrievalResult;
 import es.ucm.fdi.gaia.jcolibri.method.retrieve.NNretrieval.NNConfig;
 import es.ucm.fdi.gaia.jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
-import es.ucm.fdi.gaia.jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
+
 import es.ucm.fdi.gaia.jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
 import es.ucm.fdi.gaia.jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
 import es.ucm.fdi.gaia.jcolibri.method.retrieve.selection.SelectCases;
 import es.ucm.fdi.gaia.jcolibri.util.FileIO;
 import es.ucm.fdi.ici.c2021.practica5.grupo03.customSimFunctions.IndexDist;
 import es.ucm.fdi.ici.c2021.practica5.grupo03.customSimFunctions.globalEqualFun;
-import es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.Action;
+
+import pacman.game.Constants.GHOST;
 import pacman.game.Constants.MOVE;
 import pacman.game.Game;
 
-public class MsPacManCBRengine implements StandardCBRApplication {
+public class GhostsCBRengine implements StandardCBRApplication {
 
 	private String casebaseFile;
 	MOVE move;
+	GHOST ghost;
 	Game game;
 	IndexDist indD;
-	private MsPacManStorageManager storageManager;
+	private GhostsStorageManager storageManager; //
 
 	private Random rnd = new Random();
 	
@@ -41,7 +44,7 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 	
 	
 	
-	final static String CONNECTOR_FILE_PATH = "es/ucm/fdi/ici/c2021/practica5/grupo03/msPacMan/CBRengine/plaintextconfig.xml"; //Cuidado!! poner el grupo aquí
+	final static String CONNECTOR_FILE_PATH = "es/ucm/fdi/ici/c2021/practica5/grupo03/ghost/CBRengine/plaintextconfig.xml"; //Cuidado!! poner el grupo aquí
 
 	/**
 	 * Simple extension to allow custom case base files. It also creates a new empty file if it does not exist.
@@ -60,8 +63,12 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 		}
 	}
 	
+	public void setGhost(GHOST ghost) {
+		this.ghost = ghost;
+	}
 	
-	public MsPacManCBRengine( MsPacManStorageManager storageManager)
+	
+	public GhostsCBRengine( GhostsStorageManager storageManager)
 	{
 		this.storageManager = storageManager;
 	}
@@ -79,44 +86,28 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 		connector.setCaseBaseFile(this.casebaseFile);
 		this.storageManager.setCaseBase(caseBase);
 		
-		indD = new IndexDist(30);
+		indD = new IndexDist(100);
 		simConfig = new NNConfig();
 		simConfig.setDescriptionSimFunction(new globalEqualFun());
 		
-		simConfig.addMapping(new Attribute("lastDir",MsPacManDescription.class), new Equal());
-		simConfig.addMapping(new Attribute("nLevel",MsPacManDescription.class), new Equal());
+		simConfig.addMapping(new Attribute("distanceToPacManP",GhostsDescription.class), new Interval(300));
+		simConfig.addMapping(new Attribute("distanceToPacManB",GhostsDescription.class), new Interval(300));
+		simConfig.addMapping(new Attribute("distanceToPacManI",GhostsDescription.class), new Interval(300));
+		simConfig.addMapping(new Attribute("distanceToPacManS",GhostsDescription.class), new Interval(300));
 		
-		simConfig.addMapping(new Attribute("distanceInky",MsPacManDescription.class), new Interval(300));
-		simConfig.addMapping(new Attribute("distancePinky",MsPacManDescription.class), new Interval(300));
-		simConfig.addMapping(new Attribute("distanceSue",MsPacManDescription.class), new Interval(300));
-		simConfig.addMapping(new Attribute("distanceBlinky",MsPacManDescription.class), new Interval(300));
+		simConfig.addMapping(new Attribute("distancePacManToPowerPill",GhostsDescription.class), new Interval(300));
 		
-		simConfig.addMapping(new Attribute("timeEdibleInky",MsPacManDescription.class), new Interval(200));
-		simConfig.addMapping(new Attribute("timeEdiblePinky",MsPacManDescription.class), new Interval(200));
-		simConfig.addMapping(new Attribute("timeEdibleSue",MsPacManDescription.class), new Interval(200));
-		simConfig.addMapping(new Attribute("timeEdibleBlinky",MsPacManDescription.class), new Interval(200));
+		simConfig.addMapping(new Attribute("eatableTime",GhostsDescription.class), new Interval(200));
 		
-		simConfig.addMapping(new Attribute("chasedByInky",MsPacManDescription.class), new Interval(4));
-		simConfig.addMapping(new Attribute("chasedByPinky",MsPacManDescription.class), new Interval(4));
-		simConfig.addMapping(new Attribute("chasedBySue",MsPacManDescription.class), new Interval(4));
-		simConfig.addMapping(new Attribute("chasedByBlinky",MsPacManDescription.class), new Interval(4));
+		simConfig.addMapping(new Attribute("nLevel",GhostsDescription.class), new Equal());
+		simConfig.addMapping(new Attribute("lastDir",GhostsDescription.class), new Equal());
+
+		simConfig.addMapping(new Attribute("indexP",GhostsDescription.class), indD);
+		simConfig.addMapping(new Attribute("indexI",GhostsDescription.class), indD);
+		simConfig.addMapping(new Attribute("indexS",GhostsDescription.class), indD);
+		simConfig.addMapping(new Attribute("indexB",GhostsDescription.class), indD);
 		
-		simConfig.addMapping(new Attribute("distanceInterUp",MsPacManDescription.class), new Interval(300));
-		simConfig.addMapping(new Attribute("distanceInterDown",MsPacManDescription.class), new Interval(300));
-		simConfig.addMapping(new Attribute("distanceInterLeft",MsPacManDescription.class), new Interval(300));
-		simConfig.addMapping(new Attribute("distanceInterRight",MsPacManDescription.class), new Interval(300));
-		
-		simConfig.addMapping(new Attribute("numPillsUp",MsPacManDescription.class), new Interval(50));
-		simConfig.addMapping(new Attribute("numPillsDown",MsPacManDescription.class), new Interval(50));
-		simConfig.addMapping(new Attribute("numPillsLeft",MsPacManDescription.class), new Interval(50));
-		simConfig.addMapping(new Attribute("numPillsRight",MsPacManDescription.class), new Interval(50));
-		
-		simConfig.addMapping(new Attribute("indexP",MsPacManDescription.class), indD);
-		simConfig.addMapping(new Attribute("indexI",MsPacManDescription.class), indD);
-		simConfig.addMapping(new Attribute("indexS",MsPacManDescription.class), indD);
-		simConfig.addMapping(new Attribute("indexB",MsPacManDescription.class), indD);
-		
-		simConfig.addMapping(new Attribute("pacManIndex",MsPacManDescription.class), indD);	
+		simConfig.addMapping(new Attribute("indexPacMan",GhostsDescription.class), indD);	
 
 		
 	}
@@ -148,8 +139,8 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 			CBRCase mostSimilarCase = first.get_case();
 			double similarity = first.getEval();
 	
-			MsPacManResult result = (MsPacManResult) mostSimilarCase.getResult();
-			MsPacManSolution solution = (MsPacManSolution) mostSimilarCase.getSolution();
+			GhostsResult result = (GhostsResult) mostSimilarCase.getResult();
+			GhostsSolution solution = (GhostsSolution) mostSimilarCase.getSolution();
 			
 			//Now compute a solution for the query
 			
@@ -174,9 +165,9 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 	 */
 	private CBRCase createNewCase(CBRQuery query) {
 		CBRCase newCase = new CBRCase();
-		MsPacManDescription newDescription = (MsPacManDescription) query.getDescription();
-		MsPacManResult newResult = new MsPacManResult();
-		MsPacManSolution newSolution = new MsPacManSolution();
+		GhostsDescription newDescription = (GhostsDescription) query.getDescription();
+		GhostsResult newResult = new GhostsResult();
+		GhostsSolution newSolution = new GhostsSolution();
 		int newId = this.caseBase.getCases().size();
 		newId+= storageManager.getPendingCases();
 		newDescription.setId(newId);
