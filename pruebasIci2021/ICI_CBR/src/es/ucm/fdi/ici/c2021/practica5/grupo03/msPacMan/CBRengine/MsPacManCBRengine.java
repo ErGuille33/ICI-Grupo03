@@ -22,7 +22,6 @@ import es.ucm.fdi.gaia.jcolibri.util.FileIO;
 import es.ucm.fdi.ici.c2021.practica5.grupo03.customSimFunctions.IndexDist;
 import es.ucm.fdi.ici.c2021.practica5.grupo03.customSimFunctions.globalEqualFun;
 import es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.Action;
-import es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.MsPacManActionSelector;
 import pacman.game.Constants.MOVE;
 import pacman.game.Game;
 

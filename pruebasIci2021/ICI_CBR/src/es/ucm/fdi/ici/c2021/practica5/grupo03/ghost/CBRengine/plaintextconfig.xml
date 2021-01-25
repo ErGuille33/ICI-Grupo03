@@ -1,0 +1,41 @@
+<TextFileConfiguration>
+	<FilePath>es/ucm/fdi/ici/c2021/practica5/grupo03/data/generalGhostCasebase.txt</FilePath>
+	<Delimiters>,</Delimiters>
+	<DescriptionClassName>es.ucm.fdi.ici.c2021.practica5.grupo03.ghost.CBRengine.GhostsDescription</DescriptionClassName>
+	<DescriptionMappings>
+		<Map>id</Map>
+		
+		<Map>distanceToPacManP</Map>
+		<Map>distanceToPacManB</Map>
+		<Map>distanceToPacManI</Map>
+		<Map>distanceToPacManS</Map>
+		
+		<Map>distancePacManToPowerPill</Map>
+		
+		<Map>eatableTime</Map>
+		
+		<Map>indexP</Map>
+		<Map>indexB</Map>
+		<Map>indexI</Map>
+		<Map>indexS</Map>
+		
+		<Map>indexPacMan</Map>
+		
+		<Map>nLevel</Map>
+		<Map>lastDir</Map>
+		
+		<Map>lifes</Map>
+		<Map>activePowerPills</Map>
+					
+	</DescriptionMappings>
+	<SolutionClassName>es.ucm.fdi.ici.c2021.practica5.grupo03.ghost.CBRengine.GhostsSolution</SolutionClassName>
+	<SolutionMappings>
+		<Map>id</Map>
+		<Map>move</Map>
+	</SolutionMappings>
+	<ResultClassName>es.ucm.fdi.ici.c2021.practica5.grupo03.ghost.CBRengine.GhostsResult</ResultClassName>
+	<ResultMappings>
+		<Map>id</Map>
+		<Map>score</Map>
+	</ResultMappings>
+</TextFileConfiguration>
