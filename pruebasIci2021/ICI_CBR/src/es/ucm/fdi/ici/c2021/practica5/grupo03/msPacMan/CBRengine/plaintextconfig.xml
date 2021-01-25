@@ -40,8 +40,7 @@
 
 		<Map>lastDir</Map>		
 		<Map>ghostEaten</Map>
-		<Map>nLevel</Map>	
-				
+		<Map>nLevel</Map>				
 	</DescriptionMappings>
 	<SolutionClassName>es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.CBRengine.MsPacManSolution</SolutionClassName>
 	<SolutionMappings>

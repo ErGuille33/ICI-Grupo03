@@ -356,12 +356,12 @@ public class MsPacManDescription implements CaseComponent {
 	}
 
 
-	public int getnLevel() {
+	public int getNLevel() {
 		return nLevel;
 	}
 
 
-	public void setnLevel(int nLevel) {
+	public void setNLevel(int nLevel) {
 		this.nLevel = nLevel;
 	}
 

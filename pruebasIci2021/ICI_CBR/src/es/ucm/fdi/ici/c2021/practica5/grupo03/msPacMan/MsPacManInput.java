@@ -102,6 +102,18 @@ public class MsPacManInput implements Input {
 		description.setNumPillsDown(numPillsDown);
 		description.setNumPillsLeft(numPillsLeft);
 		description.setNumPillsRight(numPillsRight);
+		
+		description.setIndexB(indexB);
+		description.setIndexP(indexP);
+		description.setIndexI(indexI);
+		description.setIndexS(indexS);
+		
+		description.setPacManIndex(pacManIndex);
+		description.setPillsEated(pillsEated);
+		
+		description.setLastDir(lastDir);
+		description.setGhostEaten(ghostEaten);
+		description.setNLevel(nLevel);
 				
 		CBRQuery query = new CBRQuery();
 		query.setDescription(description);
