@@ -81,16 +81,16 @@ public class GhostsStorageManager {
 		
 		switch (ghost) {
 		case INKY:
-			weightI = .2;
+			weightI = .5;
 			break;
 		case BLINKY:
-			weightB = .2;
+			weightB = .5;
 			break;
 		case SUE:
-			weightS = .2;
+			weightS = .5;
 			break;
 		case PINKY:
-			weightP = .2;
+			weightP = .5;
 			break;
 		default:
 			break;
