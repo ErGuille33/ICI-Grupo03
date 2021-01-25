@@ -22,6 +22,7 @@ public class GhostsDescription implements CaseComponent {
 	Integer indexS;
 	
 	Integer indexPacMan;
+	Integer myIndex;
 	
 	Integer nLevel;
 	Integer lastDir;
@@ -30,6 +31,34 @@ public class GhostsDescription implements CaseComponent {
 	Integer lifes;
 	Integer activePowerPills;
 	
+
+	public Integer getMyIndex() {
+		return myIndex;
+	}
+
+	public void setMyIndex(Integer myIndex) {
+		this.myIndex = myIndex;
+	}
+
+	public void setDistanceToPacManP(Double distanceToPacManP) {
+		this.distanceToPacManP = distanceToPacManP;
+	}
+
+	public void setDistanceToPacManB(Double distanceToPacManB) {
+		this.distanceToPacManB = distanceToPacManB;
+	}
+
+	public void setDistanceToPacManI(Double distanceToPacManI) {
+		this.distanceToPacManI = distanceToPacManI;
+	}
+
+	public void setDistanceToPacManS(Double distanceToPacManS) {
+		this.distanceToPacManS = distanceToPacManS;
+	}
+
+	public void setDistancePacManToPowerPill(Double distancePacManToPowerPill) {
+		this.distancePacManToPowerPill = distancePacManToPowerPill;
+	}
 
 	public Integer getActivePowerPills() {
 		return activePowerPills;
@@ -170,9 +199,11 @@ public class GhostsDescription implements CaseComponent {
 				+ distanceToPacManB + ", distanceToPacManI=" + distanceToPacManI + ", distanceToPacManS="
 				+ distanceToPacManS + ", distancePacManToPowerPill=" + distancePacManToPowerPill + ", eatableTime="
 				+ eatableTime + ", indexP=" + indexP + ", indexB=" + indexB + ", indexI=" + indexI + ", indexS="
-				+ indexS + ", indexPacMan=" + indexPacMan + ", nLevel=" + nLevel + ", lastDir=" + lastDir + ", lifes="
-				+ lifes + ", activePowerPills=" + activePowerPills + "]";
+				+ indexS + ", indexPacMan=" + indexPacMan + ", myIndex=" + myIndex + ", nLevel=" + nLevel + ", lastDir="
+				+ lastDir + ", lifes=" + lifes + ", activePowerPills=" + activePowerPills + "]";
 	}
+
+
 
 
 

@@ -34,6 +34,7 @@ public class GhostsCBRengine implements StandardCBRApplication {
 	GHOST ghost;
 	Game game;
 	IndexDist indD;
+	IndexDist indDGhost;
 	private GhostsStorageManager storageManager; //
 
 	private Random rnd = new Random();
@@ -87,6 +88,8 @@ public class GhostsCBRengine implements StandardCBRApplication {
 		this.storageManager.setCaseBase(caseBase);
 		
 		indD = new IndexDist(100);
+		indDGhost = new IndexDist(20);
+		
 		simConfig = new NNConfig();
 		simConfig.setDescriptionSimFunction(new globalEqualFun());
 		
@@ -102,6 +105,7 @@ public class GhostsCBRengine implements StandardCBRApplication {
 		simConfig.addMapping(new Attribute("nLevel",GhostsDescription.class), new Equal());
 		simConfig.addMapping(new Attribute("lastDir",GhostsDescription.class), new Equal());
 
+		simConfig.addMapping(new Attribute("myIndex",GhostsDescription.class), indDGhost);
 		simConfig.addMapping(new Attribute("indexP",GhostsDescription.class), indD);
 		simConfig.addMapping(new Attribute("indexI",GhostsDescription.class), indD);
 		simConfig.addMapping(new Attribute("indexS",GhostsDescription.class), indD);
@@ -129,7 +133,7 @@ public class GhostsCBRengine implements StandardCBRApplication {
 		}else {
 			//Seteamos el game para la distancia entre indices
 			indD.setGame(game);
-			
+			indDGhost.setGame(game);
 			//Compute NN
 			Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(caseBase.getCases(), query, simConfig);
 			

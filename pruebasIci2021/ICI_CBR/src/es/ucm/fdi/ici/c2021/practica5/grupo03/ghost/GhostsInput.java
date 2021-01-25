@@ -27,6 +27,7 @@ public class GhostsInput implements Input {
 	Integer indexS;
 	
 	Integer indexPacMan;
+	Integer myIndex;
 	
 	Integer nLevel;
 	Integer lastDir;
@@ -46,6 +47,8 @@ public class GhostsInput implements Input {
 		distanceToPacManI = game.getDistance(game.getGhostCurrentNodeIndex(GHOST.INKY), game.getPacmanCurrentNodeIndex(), DM.PATH);
 		distanceToPacManB = game.getDistance(game.getGhostCurrentNodeIndex(GHOST.BLINKY), game.getPacmanCurrentNodeIndex(), DM.PATH);
 		distanceToPacManS = game.getDistance(game.getGhostCurrentNodeIndex(GHOST.SUE), game.getPacmanCurrentNodeIndex(), DM.PATH);
+		
+		myIndex = game.getGhostCurrentNodeIndex(ghost);
 		
 		eatableTime = game.getGhostEdibleTime(ghost);
 		
@@ -82,6 +85,8 @@ public class GhostsInput implements Input {
 	@Override
 	public CBRQuery getQuery() {
 		GhostsDescription description = new GhostsDescription();
+		
+		description.setMyIndex(myIndex);
 		
 		description.setDistanceToPacManS(distanceToPacManS);
 		description.setDistanceToPacManP(distanceToPacManP);
