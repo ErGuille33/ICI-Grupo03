@@ -2,26 +2,27 @@ package es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.CBRengine;
 
 import java.io.File;
 import java.util.Random;
+import java.util.stream.Collectors;
 import java.util.Collection;
+import java.util.List;
 
 import es.ucm.fdi.gaia.jcolibri.cbraplications.StandardCBRApplication;
 import es.ucm.fdi.gaia.jcolibri.cbrcore.Attribute;
 import es.ucm.fdi.gaia.jcolibri.cbrcore.CBRCase;
 import es.ucm.fdi.gaia.jcolibri.cbrcore.CBRCaseBase;
 import es.ucm.fdi.gaia.jcolibri.cbrcore.CBRQuery;
+import es.ucm.fdi.gaia.jcolibri.cbrcore.CaseComponent;
 import es.ucm.fdi.gaia.jcolibri.connector.PlainTextConnector;
 import es.ucm.fdi.gaia.jcolibri.exception.ExecutionException;
 import es.ucm.fdi.gaia.jcolibri.method.retrieve.RetrievalResult;
 import es.ucm.fdi.gaia.jcolibri.method.retrieve.NNretrieval.NNConfig;
-import es.ucm.fdi.gaia.jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
-import es.ucm.fdi.gaia.jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
 import es.ucm.fdi.gaia.jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
 import es.ucm.fdi.gaia.jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
 import es.ucm.fdi.gaia.jcolibri.method.retrieve.selection.SelectCases;
 import es.ucm.fdi.gaia.jcolibri.util.FileIO;
 import es.ucm.fdi.ici.c2021.practica5.grupo03.customSimFunctions.IndexDist;
 import es.ucm.fdi.ici.c2021.practica5.grupo03.customSimFunctions.globalEqualFun;
-import es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.Action;
+import pacman.game.Constants.DM;
 import pacman.game.Constants.MOVE;
 import pacman.game.Game;
 
@@ -183,7 +184,7 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 	 */
 	private void casosBase(CBRQuery query, CBRCaseBase cbrC, float sim, float res, int NN, float p1, float p2){
 		//Compute NN
-		Collection<RetrievalResult> eval = ParallelNNScoringMethod.evaluateSimilarityParallel(cbrC.getCases(), query, simConfig);		
+		Collection<RetrievalResult> eval = customNN(cbrC.getCases(), query);		
 		
 		MsPacManResult result = null;
 		MsPacManSolution solution = null;
@@ -221,6 +222,95 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 		//Now compute a solution for the query	
 		
 	}
+	
+	public Collection<RetrievalResult> customNN(Collection<CBRCase> cases, CBRQuery query) {
+
+		// Parallel stream
+
+		    List<RetrievalResult> res = cases.parallelStream()
+
+		                .map(c -> new RetrievalResult(c, computeSimilarity(query.getDescription(), c.getDescription())))
+
+		                .collect(Collectors.toList());
+
+		    // Sort the result
+
+		        res.sort(RetrievalResult::compareTo);
+
+		        return res;
+
+	}
+	
+	private Double computeSimilarity(CaseComponent description, CaseComponent description2) {
+
+		MsPacManDescription _query = (MsPacManDescription)description;
+
+		MsPacManDescription _case = (MsPacManDescription)description2;
+
+		double simil = 1;
+		double maxDist = 300;
+		int maxTime = 200;
+		
+		simil *= _query.getLastDir().equals(_case.getLastDir()) ? 0.0 : 1.0;
+		
+		simil *= _query.getNLevel().equals(_case.getNLevel()) ? 1.0 : 0.0;
+		
+		if(simil == 0)
+			return 0.0;
+
+		simil *= Math.abs(_query.getDistanceInky()-_case.getDistanceInky())/maxDist;
+		
+		simil += Math.abs(_query.getDistancePinky()-_case.getDistancePinky())/maxDist;
+		
+		simil += Math.abs(_query.getDistanceBlinky()-_case.getDistanceBlinky())/maxDist;
+		
+		simil += Math.abs(_query.getDistanceSue()-_case.getDistanceSue())/maxDist;
+		
+		simil += Math.abs(_query.getDistanceInterUp()-_case.getDistanceInterUp())/50;
+		
+		simil += Math.abs(_query.getDistanceInterDown()-_case.getDistanceInterDown())/50;
+		
+		simil += Math.abs(_query.getDistanceInterLeft()-_case.getDistanceInterLeft())/50;
+		
+		simil += Math.abs(_query.getDistanceInterRight()-_case.getDistanceInterRight())/50;
+		
+		simil += Math.abs(_query.getTimeEdibleInky()-_case.getTimeEdibleInky())/maxTime;
+		
+		simil += Math.abs(_query.getTimeEdiblePinky()-_case.getTimeEdiblePinky())/maxTime;
+		
+		simil += Math.abs(_query.getTimeEdibleBlinky()-_case.getTimeEdibleBlinky())/maxTime;
+		
+		simil += Math.abs(_query.getTimeEdibleSue()-_case.getTimeEdibleSue())/maxTime;
+		
+		simil += Math.abs(_query.getChasedByInky()-_case.getChasedByInky())/4;
+		
+		simil += Math.abs(_query.getChasedByPinky()-_case.getChasedByPinky())/4;
+		
+		simil += Math.abs(_query.getChasedByBlinky()-_case.getChasedByBlinky())/4;
+		
+		simil += Math.abs(_query.getChasedBySue()-_case.getChasedBySue())/4;
+		
+		simil += Math.abs(_query.getNumPillsUp()-_case.getNumPillsUp())/50;
+		
+		simil += Math.abs(_query.getNumPillsDown()-_case.getNumPillsDown())/50;
+		
+		simil += Math.abs(_query.getNumPillsLeft()-_case.getNumPillsLeft())/50;
+		
+		simil += Math.abs(_query.getNumPillsRight()-_case.getNumPillsRight())/50;
+		
+		simil += game.getDistance(_query.getIndexP(), _case.getIndexP(), DM.PATH)/30;
+		
+		simil += game.getDistance(_query.getIndexI(), _case.getIndexI(), DM.PATH)/30;
+		
+		simil += game.getDistance(_query.getIndexS(), _case.getIndexS(), DM.PATH)/30;
+		
+		simil += game.getDistance(_query.getIndexB(), _case.getIndexB(), DM.PATH)/30;
+
+		simil += game.getDistance(_query.getPacManIndex(), _case.getPacManIndex(), DM.PATH)/30;
+
+		return simil/25.0;
+
+		}
 
 	/**
 	 * Creates a new case using the query as description, 

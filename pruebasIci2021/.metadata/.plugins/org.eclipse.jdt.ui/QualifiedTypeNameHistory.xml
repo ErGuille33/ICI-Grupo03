@@ -31,6 +31,14 @@
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica4.grupo03.Ghosts"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.gaia.jcolibri.method.retrieve.NNretrieval.similarity.LocalSimilarityFunction"/>
     <fullyQualifiedTypeName name="pacman.game.Constants.DM"/>
-    <fullyQualifiedTypeName name="pacman.game.Game"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica5.grupo03.customSimFunctions.IndexDist"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.util.stream.Collectors"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.gaia.jcolibri.cbrcore.CaseComponent"/>
+    <fullyQualifiedTypeName name="pacman.game.Game"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.CBRengine.MsPacManDescription"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.CBRengine.NNThreadM"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica5.grupo03.ghost.CBRengine.NNThreadG"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica5.grupo03.ghost.CBRengine.GhostsDescription"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica5.grupo03.custom.ParallelNNScoringMethod"/>
 </qualifiedTypeNameHistroy>

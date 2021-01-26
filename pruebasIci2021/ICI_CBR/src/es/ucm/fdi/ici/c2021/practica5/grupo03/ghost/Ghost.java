@@ -17,6 +17,7 @@ public class Ghost extends GhostController {
 	GhostsInput input;
 	GhostsCBRengine cbrEngine;
 	GhostsStorageManager storageManager;
+	GhostsStorageManager baseStorageManager;
 	
 	final static String FILE_PATH = "cbrdata/grupo03/Ghost/%s.csv"; //Cuidado!! poner el grupo aquí
 	
@@ -25,13 +26,14 @@ public class Ghost extends GhostController {
 		this.input = new GhostsInput();
 
 		this.storageManager = new GhostsStorageManager();
+		this.baseStorageManager = new GhostsStorageManager();
 		
-		cbrEngine = new GhostsCBRengine( storageManager);
+		cbrEngine = new GhostsCBRengine( storageManager, baseStorageManager);
 	}
 	
 	@Override
 	public void preCompute(String opponent) {
-		cbrEngine.setCaseBaseFile(String.format(FILE_PATH, opponent));
+		cbrEngine.setCaseBaseFile(FILE_PATH, opponent);
 		try {
 			cbrEngine.configure();
 			cbrEngine.preCycle();
@@ -75,6 +77,8 @@ public class Ghost extends GhostController {
 				
 				storageManager.setGhost(ghost);
 				storageManager.setGame(game);
+				baseStorageManager.setGhost(ghost);
+				baseStorageManager.setGame(game);
 				
 				cbrEngine.setGhost(ghost);
 				cbrEngine.setGame(game);
@@ -86,11 +90,11 @@ public class Ghost extends GhostController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		for(GHOST ghost: GHOST.values())
+		/*for(GHOST ghost: GHOST.values())
 		{
 			MOVE move = MOVE.NEUTRAL;
 			result.put(ghost, move);
-		}
+		}*/
 		return result;
 	}
 

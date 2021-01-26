@@ -1,9 +1,5 @@
 package es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan;
 
-import java.util.ArrayList;
-
-import java.util.List;
-
 import es.ucm.fdi.gaia.jcolibri.exception.ExecutionException;
 import es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.CBRengine.MsPacManCBRengine;
 import es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.CBRengine.MsPacManStorageManager;
