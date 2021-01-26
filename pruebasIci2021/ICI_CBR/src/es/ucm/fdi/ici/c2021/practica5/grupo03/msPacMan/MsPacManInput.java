@@ -123,10 +123,10 @@ public class MsPacManInput implements Input {
 	}
 	
 	private void computeDistanceGhost(Game game) {
-		distanceBlinky = game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(GHOST.BLINKY), DM.PATH);
-		distancePinky = game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(GHOST.PINKY), DM.PATH);
-		distanceInky = game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(GHOST.INKY), DM.PATH);
-		distanceSue = game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(GHOST.SUE), DM.PATH);
+		distanceBlinky = game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(GHOST.BLINKY), DM.EUCLID);
+		distancePinky = game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(GHOST.PINKY), DM.EUCLID);
+		distanceInky = game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(GHOST.INKY), DM.EUCLID);
+		distanceSue = game.getDistance(game.getPacmanCurrentNodeIndex(), game.getGhostCurrentNodeIndex(GHOST.SUE), DM.EUCLID);
 	}
 	
 	private void computeTimeEdibleGhost(Game game) {
@@ -139,16 +139,16 @@ public class MsPacManInput implements Input {
 	private void computeChasedByGhost(Game game) {
 		MOVE moveGhost = MOVE.NEUTRAL;
 		moveGhost = game.getGhostLastMoveMade(GHOST.BLINKY);
-		chasedByBlinky = (moveGhost == game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.BLINKY), game.getPacmanCurrentNodeIndex(), DM.PATH))?1:0;
+		chasedByBlinky = (moveGhost == game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.BLINKY), game.getPacmanCurrentNodeIndex(), DM.EUCLID))?1:0;
 		
 		moveGhost = game.getGhostLastMoveMade(GHOST.INKY);
-		chasedByInky = (moveGhost == game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.INKY), game.getPacmanCurrentNodeIndex(), DM.PATH))?1:0;
+		chasedByInky = (moveGhost == game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.INKY), game.getPacmanCurrentNodeIndex(), DM.EUCLID))?1:0;
 		
 		moveGhost = game.getGhostLastMoveMade(GHOST.PINKY);
-		chasedByPinky = (moveGhost == game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.PINKY), game.getPacmanCurrentNodeIndex(), DM.PATH))?1:0;
+		chasedByPinky = (moveGhost == game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.PINKY), game.getPacmanCurrentNodeIndex(), DM.EUCLID))?1:0;
 
 		moveGhost = game.getGhostLastMoveMade(GHOST.SUE);
-		chasedBySue = (moveGhost == game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.SUE), game.getPacmanCurrentNodeIndex(), DM.PATH))?1:0;
+		chasedBySue = (moveGhost == game.getNextMoveTowardsTarget(game.getGhostCurrentNodeIndex(GHOST.SUE), game.getPacmanCurrentNodeIndex(), DM.EUCLID))?1:0;
 
 	}
 	
@@ -166,7 +166,7 @@ public class MsPacManInput implements Input {
 		while(!game.isJunction(nodeIndex) && !fuera) {
 			if((game.getNeighbouringNodes(nodeIndex, m)) != null) {
                 auxIndex = (game.getNeighbouringNodes(nodeIndex, m))[0];                
-                m = game.getNextMoveTowardsTarget(nodeIndex, auxIndex, m, DM.PATH);
+                m = game.getNextMoveTowardsTarget(nodeIndex, auxIndex, m, DM.EUCLID);
                 nodeIndex = auxIndex;
                 if(game.getPillIndex(auxIndex) != -1) {
                 	numPills++;
@@ -175,7 +175,7 @@ public class MsPacManInput implements Input {
             else
                 fuera = true;
         }
-		distanceInterUp =	game.getDistance(nodeIndex, pacManIndex, DM.PATH);
+		distanceInterUp =	game.getDistance(nodeIndex, pacManIndex, DM.EUCLID);
 		numPillsUp = numPills;
 		
 		numPills = 0;

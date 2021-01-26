@@ -65,7 +65,7 @@ public class MsPacManStorageManager {
 			// calculasmos Distancia powerPill
 			for (int i = 0; i < game.getNumberOfActivePowerPills(); i++) {
 
-				auxDist = game.getDistance(game.getPacmanCurrentNodeIndex(), game.getPowerPillIndices()[i], DM.PATH);
+				auxDist = game.getDistance(game.getPacmanCurrentNodeIndex(), game.getPowerPillIndices()[i], DM.EUCLID);
 				if (auxDist < distancePowerPill) {				
 					distancePowerPill = auxDist;
 				}
@@ -74,9 +74,9 @@ public class MsPacManStorageManager {
 		}
 		
 		double pesoPWPill = 0.15;
-		double pesoPill = 0.25;
+		double pesoPill = 0.35;
 		double pesoGhosts = 0.4 / 4;
-		double pesoEatGhost = 0.2;
+		double pesoEatGhost = 0.1;
 		if(game.getNumberOfActivePowerPills() == 0) {
 			pesoPill += pesoPWPill;
 			pesoPWPill = 0;
@@ -97,24 +97,27 @@ public class MsPacManStorageManager {
 
 		MsPacManResult result = (MsPacManResult) bCase.getResult();
 
-		double resultValue = dead * ((((newPills - lastPills) / 20) * pesoPill) + ((newGhostEat - lastGhostEat) / 4) * pesoEatGhost + Math
-				.abs(((game.getGhostEdibleTime(GHOST.BLINKY) / 200) - game.getDistance(game.getPacmanCurrentNodeIndex(),
-						game.getGhostCurrentNodeIndex(GHOST.BLINKY), DM.PATH) / 300))
+		double resultValue = dead * ((((newPills - lastPills) / 10) * pesoPill) + ((newGhostEat - lastGhostEat) / 4) * pesoEatGhost + Math
+				.abs(((game.getGhostEdibleTime(GHOST.BLINKY) / 100) - game.getDistance(game.getPacmanCurrentNodeIndex(),
+						game.getGhostCurrentNodeIndex(GHOST.BLINKY), DM.EUCLID) / 300))
 				* pesoGhosts + Math
-				.abs(((game.getGhostEdibleTime(GHOST.INKY) / 200) - game.getDistance(game.getPacmanCurrentNodeIndex(),
-						game.getGhostCurrentNodeIndex(GHOST.INKY), DM.PATH) / 300))
+				.abs(((game.getGhostEdibleTime(GHOST.INKY) / 100) - game.getDistance(game.getPacmanCurrentNodeIndex(),
+						game.getGhostCurrentNodeIndex(GHOST.INKY), DM.EUCLID) / 300))
 				* pesoGhosts+ Math
-				.abs(((game.getGhostEdibleTime(GHOST.PINKY) / 200) - game.getDistance(game.getPacmanCurrentNodeIndex(),
-						game.getGhostCurrentNodeIndex(GHOST.PINKY), DM.PATH) / 300))
+				.abs(((game.getGhostEdibleTime(GHOST.PINKY) / 100) - game.getDistance(game.getPacmanCurrentNodeIndex(),
+						game.getGhostCurrentNodeIndex(GHOST.PINKY), DM.EUCLID) / 300))
 				* pesoGhosts+ Math
-				.abs(((game.getGhostEdibleTime(GHOST.SUE) / 200) - game.getDistance(game.getPacmanCurrentNodeIndex(),
-						game.getGhostCurrentNodeIndex(GHOST.SUE), DM.PATH) / 300))
-				* pesoGhosts - (distancePowerPill / 300) * pesoPWPill);
+				.abs(((game.getGhostEdibleTime(GHOST.SUE) / 100) - game.getDistance(game.getPacmanCurrentNodeIndex(),
+						game.getGhostCurrentNodeIndex(GHOST.SUE), DM.EUCLID) / 300))
+				* pesoGhosts - (distancePowerPill / 150) * pesoPWPill);
 
 		result.setScore(resultValue);
 		// Store the old case right now into the case base
 		// Alternatively we could store all them when game finishes in close() method
-		StoreCasesMethod.storeCase(this.caseBase, bCase);
+		if(resultValue > 0.5)
+			StoreCasesMethod.storeCase(this.caseBase, bCase);
+
+		
 
 	}
 
