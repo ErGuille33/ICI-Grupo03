@@ -26,7 +26,6 @@
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica4.grupo03.ghosts.GhostsActionSelector"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica4.grupo03.ghosts.GhostsInput"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica4.grupo03.ghosts.actions.MiddlePath"/>
-    <fullyQualifiedTypeName name="pacman.game.Constants.GHOST"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica4.grupo03.ghosts.actions.FindPacman"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica4.grupo03.Ghosts"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.gaia.jcolibri.method.retrieve.NNretrieval.similarity.LocalSimilarityFunction"/>
@@ -41,4 +40,5 @@
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica5.grupo03.ghost.CBRengine.NNThreadG"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica5.grupo03.ghost.CBRengine.GhostsDescription"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica5.grupo03.custom.ParallelNNScoringMethod"/>
+    <fullyQualifiedTypeName name="pacman.game.Constants.GHOST"/>
 </qualifiedTypeNameHistroy>

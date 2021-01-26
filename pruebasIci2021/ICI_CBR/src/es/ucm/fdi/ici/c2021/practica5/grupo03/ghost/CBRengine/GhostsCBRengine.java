@@ -150,9 +150,9 @@ public class GhostsCBRengine implements StandardCBRApplication {
 		if(specificCases.getCases().isEmpty() && caseBase.getCases().isEmpty()) {
 			this.move = getPosibleRandomMove();
 		}else if (!specificCases.getCases().isEmpty()){
-			casosBase(query, specificCases, 0.7f, 0.0f, 5, 0.5f, 0.5f);			
+			casosBase(query, specificCases, 0.7f, 0.5f, 5, 0.5f, 0.5f);			
 		}else {
-			casosBase(query, caseBase, 0.7f, 0.0f, 10,  0.5f, 0.5f);
+			casosBase(query, caseBase, 0.7f, 0.5f, 10,  0.5f, 0.5f);
 		}
 		CBRCase newCase = createNewCase(query, specificCases, this.storageManager);
 		this.storageManager.storeCase(newCase);
@@ -249,36 +249,36 @@ public class GhostsCBRengine implements StandardCBRApplication {
 		double maxDist = 300;
 		int maxTime = 200;
 		
-		simil *= _query.getLastDir().equals(_case.getLastDir()) ? 0.0 : 1.0;
+		simil *= MOVE.values()[_query.getLastDir()].opposite().equals(MOVE.values()[_case.getLastDir()]) ? 0.0 : 1.0;
 		
 		simil *= _query.getNLevel().equals(_case.getNLevel()) ? 1.0 : 0.0;
 		
 		if(simil == 0)
 			return 0.0;
 
-		simil += Math.abs(_query.getDistanceToPacManI()-_case.getDistanceToPacManI())/maxDist;
+		simil *= 1-Math.abs(_query.getDistanceToPacManI()-_case.getDistanceToPacManI())/maxDist;
 		
-		simil += Math.abs(_query.getDistanceToPacManP()-_case.getDistanceToPacManP())/maxDist;
+		simil += 1-Math.abs(_query.getDistanceToPacManP()-_case.getDistanceToPacManP())/maxDist;
 		
-		simil += Math.abs(_query.getDistanceToPacManB()-_case.getDistanceToPacManB())/maxDist;
+		simil += 1-Math.abs(_query.getDistanceToPacManB()-_case.getDistanceToPacManB())/maxDist;
 		
-		simil += Math.abs(_query.getDistanceToPacManS()-_case.getDistanceToPacManS())/maxDist;
+		simil += 1-Math.abs(_query.getDistanceToPacManS()-_case.getDistanceToPacManS())/maxDist;
 		
-		simil += Math.abs(_query.getDistancePacManToPowerPill()-_case.getDistancePacManToPowerPill())/maxDist;
+		simil += 1-Math.abs(_query.getDistancePacManToPowerPill()-_case.getDistancePacManToPowerPill())/maxDist;
 		
-		simil += Math.abs(_query.getEatableTime()-_case.getEatableTime())/maxTime;
+		simil += 1-Math.abs(_query.getEatableTime()-_case.getEatableTime())/maxTime;
 		
-		simil += game.getDistance(_query.getMyIndex(), _case.getMyIndex(), DM.PATH)/5;
+		simil += game.getDistance(_query.getMyIndex(), _case.getMyIndex(), DM.PATH)<5?game.getDistance(_query.getMyIndex(), _case.getMyIndex(), DM.PATH)/5:0;
 		
-		simil += game.getDistance(_query.getIndexP(), _case.getIndexP(), DM.PATH)/20;
+		simil += game.getDistance(_query.getIndexP(), _case.getIndexP(), DM.PATH)<20?game.getDistance(_query.getIndexP(), _case.getIndexP(), DM.PATH)/20:0;
 		
-		simil += game.getDistance(_query.getIndexI(), _case.getIndexI(), DM.PATH)/20;
+		simil += game.getDistance(_query.getIndexI(), _case.getIndexI(), DM.PATH)<20?game.getDistance(_query.getIndexI(), _case.getIndexI(), DM.PATH)/20:0;
 		
-		simil += game.getDistance(_query.getIndexS(), _case.getIndexS(), DM.PATH)/20;
+		simil += game.getDistance(_query.getIndexS(), _case.getIndexS(), DM.PATH)<20?game.getDistance(_query.getIndexS(), _case.getIndexS(), DM.PATH)/20:0;
 		
-		simil += game.getDistance(_query.getIndexB(), _case.getIndexB(), DM.PATH)/20;
+		simil += game.getDistance(_query.getIndexB(), _case.getIndexB(), DM.PATH)<20?game.getDistance(_query.getIndexB(), _case.getIndexB(), DM.PATH)/20:0;
 
-		simil += game.getDistance(_query.getIndexPacMan(), _case.getIndexPacMan(), DM.PATH)/20;
+		simil += game.getDistance(_query.getIndexPacMan(), _case.getIndexPacMan(), DM.PATH)<20?game.getDistance(_query.getIndexPacMan(), _case.getIndexPacMan(), DM.PATH)/20:0;
 
 		return simil/12.0;
 
@@ -313,7 +313,9 @@ public class GhostsCBRengine implements StandardCBRApplication {
 	@Override
 	public void postCycle() throws ExecutionException {
 		this.storageManager.close();
+		this.storageManagerBase.close();
 		this.caseBase.close();
+		this.specificCases.close();
 	}
 
 }

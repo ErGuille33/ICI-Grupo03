@@ -53,11 +53,11 @@ public class GhostsStorageManager {
 
 		// DIstancia a power pill más cercana
 		int[] activePowerPills = game.getActivePowerPillsIndices();
-		double distancePowerPill = 0;
+		double distancePowerPill = 300;
 		double auxDistance = 0;
 		for (int i = 0; i < activePowerPills.length; i++) {
 			auxDistance = game.getDistance(game.getPacmanCurrentNodeIndex(), activePowerPills[i], DM.PATH);
-			if (auxDistance > distancePowerPill) {
+			if (auxDistance < distancePowerPill) {
 				distancePowerPill = auxDistance;
 			}
 		}
@@ -98,10 +98,14 @@ public class GhostsStorageManager {
 
 		double resultValue = Math.max(dead,
 				(((distancePowerPill / 300) * .1) + (comioPowerPill * 0.1)
-						+ (((1 - (timeEdibleP / 200)) - description.distanceToPacManP / 300) * weightP)
-						+ (((1 - (timeEdibleI / 200)) - description.distanceToPacManI / 300) * weightI)
-						+ (((1 - (timeEdibleB / 200)) - description.distanceToPacManB / 300) * weightB)
-						+ (((1 - (timeEdibleS / 200)) - description.distanceToPacManS / 300) * weightS)));
+						+ Math.abs((((1 - (timeEdibleP / 200)) - game.getDistance(game.getPacmanCurrentNodeIndex(),
+								game.getGhostCurrentNodeIndex(GHOST.PINKY), DM.PATH) / 300)) * weightP)
+						+ Math.abs((((1 - (timeEdibleI / 200)) - game.getDistance(game.getPacmanCurrentNodeIndex(),
+								game.getGhostCurrentNodeIndex(GHOST.INKY), DM.PATH) / 300)) * weightI)
+						+ Math.abs((((1 - (timeEdibleB / 200)) - game.getDistance(game.getPacmanCurrentNodeIndex(),
+								game.getGhostCurrentNodeIndex(GHOST.BLINKY), DM.PATH) / 300)) * weightB)
+						+ Math.abs((((1 - (timeEdibleS / 200)) - game.getDistance(game.getPacmanCurrentNodeIndex(),
+								game.getGhostCurrentNodeIndex(GHOST.SUE), DM.PATH) / 300)) * weightS)));
 
 		result.setScore(resultValue);
 		// Store the old case right now into the case base

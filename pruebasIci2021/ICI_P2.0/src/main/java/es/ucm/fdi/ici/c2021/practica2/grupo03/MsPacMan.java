@@ -14,7 +14,7 @@ import es.ucm.fdi.ici.fsm.observers.GraphFSMObserver;
 import pacman.controllers.PacmanController;
 import pacman.game.Game;
 import pacman.game.Constants.DM;
-
+import pacman.game.Constants.GHOST;
 import pacman.game.Constants.MOVE;
 import es.ucm.fdi.ici.c2021.practica2.grupo03.actions.*;
 import es.ucm.fdi.ici.c2021.practica2.grupo03.pacman.*;
@@ -65,6 +65,7 @@ public class MsPacMan extends PacmanController {
 	@Override
 	public MOVE getMove(Game game, long timeDue) {
 		Input in = new MsPacManInput(game);
+		System.out.println(game.getGhostEdibleTime(GHOST.BLINKY));
 
 		return fsm.run(in);
 	}

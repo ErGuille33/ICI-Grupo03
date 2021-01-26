@@ -154,9 +154,9 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 		if(specificCases.getCases().isEmpty() && caseBase.getCases().isEmpty()) {
 			this.move = getPosibleRandomMove();
 		}else if (!specificCases.getCases().isEmpty()){
-			casosBase(query, specificCases, 0.7f, 0.0f, 5, 0.5f, 0.5f);			
+			casosBase(query, specificCases, 0.7f, 0.5f, 5, 0.5f, 0.5f);			
 		}else {
-			casosBase(query, caseBase, 0.7f, 0.0f, 10,  0.5f, 0.5f);
+			casosBase(query, caseBase, 0.7f, 0.5f, 10,  0.5f, 0.5f);
 		}
 		CBRCase newCase = createNewCase(query, specificCases, this.storageManager);
 		this.storageManager.storeCase(newCase);
@@ -251,62 +251,65 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 		double maxDist = 300;
 		int maxTime = 200;
 		
-		simil *= _query.getLastDir().equals(_case.getLastDir()) ? 0.0 : 1.0;
+		
+		simil *= MOVE.values()[_query.getLastDir()].opposite().equals(MOVE.values()[_case.getLastDir()]) ? 0.0 : 1.0;
 		
 		simil *= _query.getNLevel().equals(_case.getNLevel()) ? 1.0 : 0.0;
 		
 		if(simil == 0)
 			return 0.0;
 
-		simil *= Math.abs(_query.getDistanceInky()-_case.getDistanceInky())/maxDist;
+		simil *= 1 - Math.abs(_query.getDistanceInky()-_case.getDistanceInky())/maxDist;
 		
-		simil += Math.abs(_query.getDistancePinky()-_case.getDistancePinky())/maxDist;
+		simil += 1 -Math.abs(_query.getDistancePinky()-_case.getDistancePinky())/maxDist;
 		
-		simil += Math.abs(_query.getDistanceBlinky()-_case.getDistanceBlinky())/maxDist;
+		simil += 1 -Math.abs(_query.getDistanceBlinky()-_case.getDistanceBlinky())/maxDist;
 		
-		simil += Math.abs(_query.getDistanceSue()-_case.getDistanceSue())/maxDist;
+		simil += 1 -Math.abs(_query.getDistanceSue()-_case.getDistanceSue())/maxDist;
 		
 		simil += Math.abs(_query.getDistanceInterUp()-_case.getDistanceInterUp())/50;
 		
-		simil += Math.abs(_query.getDistanceInterDown()-_case.getDistanceInterDown())/50;
+		simil += 1 -Math.abs(_query.getDistanceInterDown()-_case.getDistanceInterDown())/50;
 		
-		simil += Math.abs(_query.getDistanceInterLeft()-_case.getDistanceInterLeft())/50;
+		simil += 1 -Math.abs(_query.getDistanceInterLeft()-_case.getDistanceInterLeft())/50;
 		
-		simil += Math.abs(_query.getDistanceInterRight()-_case.getDistanceInterRight())/50;
+		simil += 1 -Math.abs(_query.getDistanceInterRight()-_case.getDistanceInterRight())/50;
 		
-		simil += Math.abs(_query.getTimeEdibleInky()-_case.getTimeEdibleInky())/maxTime;
+		simil += 1 -Math.abs(_query.getTimeEdibleInky()-_case.getTimeEdibleInky())/maxTime;
 		
-		simil += Math.abs(_query.getTimeEdiblePinky()-_case.getTimeEdiblePinky())/maxTime;
+		simil += 1 -Math.abs(_query.getTimeEdiblePinky()-_case.getTimeEdiblePinky())/maxTime;
 		
-		simil += Math.abs(_query.getTimeEdibleBlinky()-_case.getTimeEdibleBlinky())/maxTime;
+		simil += 1 -Math.abs(_query.getTimeEdibleBlinky()-_case.getTimeEdibleBlinky())/maxTime;
 		
-		simil += Math.abs(_query.getTimeEdibleSue()-_case.getTimeEdibleSue())/maxTime;
+		simil += 1 -Math.abs(_query.getTimeEdibleSue()-_case.getTimeEdibleSue())/maxTime;
 		
-		simil += Math.abs(_query.getChasedByInky()-_case.getChasedByInky())/4;
+		simil += 1 - Math.abs(_query.getChasedByInky()-_case.getChasedByInky());
 		
-		simil += Math.abs(_query.getChasedByPinky()-_case.getChasedByPinky())/4;
+		simil += 1 -Math.abs(_query.getChasedByPinky()-_case.getChasedByPinky());
 		
-		simil += Math.abs(_query.getChasedByBlinky()-_case.getChasedByBlinky())/4;
+		simil += 1 -Math.abs(_query.getChasedByBlinky()-_case.getChasedByBlinky());
 		
-		simil += Math.abs(_query.getChasedBySue()-_case.getChasedBySue())/4;
+		simil += 1 -Math.abs(_query.getChasedBySue()-_case.getChasedBySue());
 		
-		simil += Math.abs(_query.getNumPillsUp()-_case.getNumPillsUp())/50;
+		simil += Math.abs(_query.getNumPillsUp()-_case.getNumPillsUp())/10;
 		
-		simil += Math.abs(_query.getNumPillsDown()-_case.getNumPillsDown())/50;
+		simil += Math.abs(_query.getNumPillsDown()-_case.getNumPillsDown())/10;
 		
-		simil += Math.abs(_query.getNumPillsLeft()-_case.getNumPillsLeft())/50;
+		simil += Math.abs(_query.getNumPillsLeft()-_case.getNumPillsLeft())/10;
 		
-		simil += Math.abs(_query.getNumPillsRight()-_case.getNumPillsRight())/50;
+		simil += Math.abs(_query.getNumPillsRight()-_case.getNumPillsRight())/10;
 		
-		simil += game.getDistance(_query.getIndexP(), _case.getIndexP(), DM.PATH)/30;
+		simil += game.getDistance(_query.getIndexP(), _case.getIndexP(), DM.PATH)<30?game.getDistance(_query.getIndexP(), _case.getIndexP(), DM.PATH)/30:0;
 		
-		simil += game.getDistance(_query.getIndexI(), _case.getIndexI(), DM.PATH)/30;
+		simil += game.getDistance(_query.getIndexI(), _case.getIndexI(), DM.PATH)<30?game.getDistance(_query.getIndexI(), _case.getIndexI(), DM.PATH)/30:0;
 		
-		simil += game.getDistance(_query.getIndexS(), _case.getIndexS(), DM.PATH)/30;
+		simil += game.getDistance(_query.getIndexS(), _case.getIndexS(), DM.PATH)<30?game.getDistance(_query.getIndexS(), _case.getIndexS(), DM.PATH)/30:0;
 		
-		simil += game.getDistance(_query.getIndexB(), _case.getIndexB(), DM.PATH)/30;
+		simil += game.getDistance(_query.getIndexB(), _case.getIndexB(), DM.PATH)<30 ? game.getDistance(_query.getIndexB(), _case.getIndexB(), DM.PATH)/30:0;
 
-		simil += game.getDistance(_query.getPacManIndex(), _case.getPacManIndex(), DM.PATH)/30;
+		simil += game.getDistance(_query.getPacManIndex(), _case.getPacManIndex(), DM.PATH)<30?game.getDistance(_query.getPacManIndex(), _case.getPacManIndex(), DM.PATH)/30:0;
+		
+		_query.toString();
 
 		return simil/25.0;
 
