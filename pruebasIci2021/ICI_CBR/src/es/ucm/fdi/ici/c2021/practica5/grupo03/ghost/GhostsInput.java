@@ -74,8 +74,9 @@ public class GhostsInput implements Input {
 		int[] activePills = game.getActivePowerPillsIndices();
 		double auxDistance = 0;
 		distancePacManToPowerPill= 0.0;
+		DM euristic = DM.EUCLID;
 		for(int i = 0; i < activePills.length; i++) {
-			auxDistance = game.getDistance(game.getPacmanCurrentNodeIndex(), activePills[i], DM.PATH);
+			auxDistance = game.getDistance(game.getPacmanCurrentNodeIndex(), activePills[i], euristic);
 			if(auxDistance > distancePacManToPowerPill) {
 				distancePacManToPowerPill = auxDistance;
 			}

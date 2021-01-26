@@ -59,42 +59,30 @@ public class Ghost extends GhostController {
 		//This implementation only computes a new action when MsPacMan is in a junction. 
 		//This is relevant for the case storage policy
 		EnumMap<GHOST,MOVE> result = new EnumMap<GHOST,MOVE>(GHOST.class);		
-		if(!game.isJunction(game.getPacmanCurrentNodeIndex()))
-		{
-			for(GHOST ghost: GHOST.values())
-			{
-				MOVE move = MOVE.NEUTRAL;
-				result.put(ghost, move);
-			}
-			return result;
-		}
 			
 		try {
 			for(GHOST ghost: GHOST.values())
 			{
-				input.setGhost(ghost);
-				input.parseInput(game);
-				
-				storageManager.setGhost(ghost);
-				storageManager.setGame(game);
-				baseStorageManager.setGhost(ghost);
-				baseStorageManager.setGame(game);
-				
-				cbrEngine.setGhost(ghost);
-				cbrEngine.setGame(game);
-				cbrEngine.cycle(input.getQuery());
-				result.put(ghost, cbrEngine.getSolution());
+				if(game.isJunction(game.getGhostCurrentNodeIndex(ghost))){
+					input.setGhost(ghost);
+					input.parseInput(game);
+					
+					storageManager.setGhost(ghost);
+					storageManager.setGame(game);
+					baseStorageManager.setGhost(ghost);
+					baseStorageManager.setGame(game);
+					
+					cbrEngine.setGhost(ghost);
+					cbrEngine.setGame(game);
+					cbrEngine.cycle(input.getQuery());
+					result.put(ghost, cbrEngine.getSolution());
+				}
 			}
 			
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		/*for(GHOST ghost: GHOST.values())
-		{
-			MOVE move = MOVE.NEUTRAL;
-			result.put(ghost, move);
-		}*/
 		return result;
 	}
 

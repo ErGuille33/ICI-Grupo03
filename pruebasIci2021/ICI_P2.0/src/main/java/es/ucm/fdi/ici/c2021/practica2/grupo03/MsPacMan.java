@@ -65,7 +65,6 @@ public class MsPacMan extends PacmanController {
 	@Override
 	public MOVE getMove(Game game, long timeDue) {
 		Input in = new MsPacManInput(game);
-		System.out.println(game.getGhostEdibleTime(GHOST.BLINKY));
 
 		return fsm.run(in);
 	}
