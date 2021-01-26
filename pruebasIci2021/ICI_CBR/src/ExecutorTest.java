@@ -11,10 +11,10 @@ import pacman.controllers.PacmanController;
 public class ExecutorTest {
 
     public static void main(String[] args) {
-    	for(int i = 0; i < 50; i++) {
+    	for(int i = 0; i < 500; i++) {
 	        Executor executor = new Executor.Builder()
 	                .setTickLimit(4000)
-	                .setVisual(true)
+	                .setVisual(false)
 	                .setScaleFactor(3.0)
 	                .build();
 	
@@ -23,7 +23,7 @@ public class ExecutorTest {
 	      
 	        
 	        System.out.println( 
-	        		executor.runGame(pacMan, ghosts, 20)
+	        		executor.runGame(pacMan, ghosts, 0)
 	        );
     	}
         

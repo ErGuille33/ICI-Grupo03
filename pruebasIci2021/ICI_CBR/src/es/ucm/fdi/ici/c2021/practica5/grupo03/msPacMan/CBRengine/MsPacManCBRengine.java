@@ -151,13 +151,20 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 	@Override
 	public void cycle(CBRQuery query) throws ExecutionException {
 		indD.setGame(game);
-		if(specificCases.getCases().isEmpty() && caseBase.getCases().isEmpty()) {
-			this.move = getPosibleRandomMove();
-		}else if (!specificCases.getCases().isEmpty()){
-			casosBase(query, specificCases, 0.7f, 0.5f, 5, 0.5f, 0.5f);			
-		}else {
-			casosBase(query, caseBase, 0.7f, 0.5f, 10,  0.5f, 0.5f);
-		}
+		boolean m = false;
+        if(specificCases.getCases().isEmpty() && caseBase.getCases().isEmpty()) {
+            this.move = getPosibleRandomMove();
+            m = true;
+        }
+        
+        if (!specificCases.getCases().isEmpty() && !m){
+            m = casosBase(query, specificCases, 0.7f, 0.6f, 5, 0.4f, 0.6f);            
+        }
+        if(!caseBase.getCases().isEmpty() && !m) {
+            m = casosBase(query, caseBase, 0.6f, 0.6f, 10,  0.4f, 0.6f);
+        }
+        if(!m)
+            this.move = getPosibleRandomMove();
 		CBRCase newCase = createNewCase(query, specificCases, this.storageManager);
 		this.storageManager.storeCase(newCase);
 		
@@ -182,7 +189,7 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 	 * @param p1 peso de la similitud
 	 * @param p2 peso del resultado
 	 */
-	private void casosBase(CBRQuery query, CBRCaseBase cbrC, float sim, float res, int NN, float p1, float p2){
+	private boolean casosBase(CBRQuery query, CBRCaseBase cbrC, float sim, float res, int NN, float p1, float p2){
 		//Compute NN
 		Collection<RetrievalResult> eval = customNN(cbrC.getCases(), query);		
 		
@@ -212,11 +219,14 @@ public class MsPacManCBRengine implements StandardCBRApplication {
 			
 		}		
 		
-		if(bestCase == null)
+		if(bestCase == null) {
 			move = getPosibleRandomMove();
+			return false;
+		}
 		else {
 			solution = (MsPacManSolution) bestCase.getSolution();
 			move = MOVE.values()[solution.getMove()];
+			return true;
 		}
 			
 		//Now compute a solution for the query	
