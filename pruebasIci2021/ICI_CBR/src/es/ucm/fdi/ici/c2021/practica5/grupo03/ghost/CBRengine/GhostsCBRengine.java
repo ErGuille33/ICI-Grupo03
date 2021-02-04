@@ -24,7 +24,7 @@ import es.ucm.fdi.gaia.jcolibri.method.retrieve.selection.SelectCases;
 import es.ucm.fdi.gaia.jcolibri.util.FileIO;
 import es.ucm.fdi.ici.c2021.practica5.grupo03.customSimFunctions.IndexDist;
 import es.ucm.fdi.ici.c2021.practica5.grupo03.customSimFunctions.globalEqualFun;
-import es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.CBRengine.CachedLinearCaseBase;
+import es.ucm.fdi.ici.c2021.practica5.grupo03.ghost.CBRengine.CachedLinearCaseBase;
 import pacman.game.Constants.DM;
 import pacman.game.Constants.GHOST;
 import pacman.game.Constants.MOVE;
@@ -34,6 +34,8 @@ public class GhostsCBRengine implements StandardCBRApplication {
 
 	private String specificFile;
 	private String casebaseFile;
+	int nRandom = 0;
+	int nTotal = 0;
 	MOVE move;
 	GHOST ghost;
 	Game game;
@@ -46,8 +48,8 @@ public class GhostsCBRengine implements StandardCBRApplication {
 	
 	CustomPlainTextConnector connectorSpecific;
 	CustomPlainTextConnector connectorBase;
-	CBRCaseBase caseBase;
-	CBRCaseBase specificCases;
+	CachedLinearCaseBase caseBase;
+	CachedLinearCaseBase specificCases;
 	NNConfig simConfig;
 	
 	
@@ -109,10 +111,10 @@ public class GhostsCBRengine implements StandardCBRApplication {
 		simConfig = new NNConfig();
 		simConfig.setDescriptionSimFunction(new globalEqualFun());
 		
-		simConfig.addMapping(new Attribute("distanceToPacManP",GhostsDescription.class), new Interval(300));
-		simConfig.addMapping(new Attribute("distanceToPacManB",GhostsDescription.class), new Interval(300));
-		simConfig.addMapping(new Attribute("distanceToPacManI",GhostsDescription.class), new Interval(300));
-		simConfig.addMapping(new Attribute("distanceToPacManS",GhostsDescription.class), new Interval(300));
+		//simConfig.addMapping(new Attribute("distanceToPacManP",GhostsDescription.class), new Interval(300));
+		//simConfig.addMapping(new Attribute("distanceToPacManB",GhostsDescription.class), new Interval(300));
+		//simConfig.addMapping(new Attribute("distanceToPacManI",GhostsDescription.class), new Interval(300));
+		//simConfig.addMapping(new Attribute("distanceToPacManS",GhostsDescription.class), new Interval(300));
 		
 		simConfig.addMapping(new Attribute("distancePacManToPowerPill",GhostsDescription.class), new Interval(300));
 		
@@ -122,12 +124,13 @@ public class GhostsCBRengine implements StandardCBRApplication {
 		simConfig.addMapping(new Attribute("lastDir",GhostsDescription.class), new Equal());
 
 		simConfig.addMapping(new Attribute("myIndex",GhostsDescription.class), indDGhost);
-		simConfig.addMapping(new Attribute("indexP",GhostsDescription.class), indD);
-		simConfig.addMapping(new Attribute("indexI",GhostsDescription.class), indD);
-		simConfig.addMapping(new Attribute("indexS",GhostsDescription.class), indD);
-		simConfig.addMapping(new Attribute("indexB",GhostsDescription.class), indD);
+		//simConfig.addMapping(new Attribute("indexP",GhostsDescription.class), indD);
+		//simConfig.addMapping(new Attribute("indexI",GhostsDescription.class), indD);
+		//simConfig.addMapping(new Attribute("indexS",GhostsDescription.class), indD);
+		//simConfig.addMapping(new Attribute("indexB",GhostsDescription.class), indD);
 		
-		simConfig.addMapping(new Attribute("indexPacMan",GhostsDescription.class), indD);	
+		simConfig.addMapping(new Attribute("indexPacMan",GhostsDescription.class), indD);
+		simConfig.addMapping(new Attribute("pacmanLastDir",GhostsDescription.class), new Equal());
 
 		
 	}
@@ -154,15 +157,15 @@ public class GhostsCBRengine implements StandardCBRApplication {
 		}
 		
 		if (!specificCases.getCases().isEmpty() && !m){
-			m = casosBase(query, specificCases, 0.7f, 0.6f, 5, 0.4f, 0.6f);			
+			m = casosBase(query, specificCases, 0.6f, 0.7f, 15, 0.45f, 0.55f);			
 		}
 		if(!caseBase.getCases().isEmpty() && !m) {
-			m = casosBase(query, caseBase, 0.6f, 0.6f, 10,  0.4f, 0.6f);
+			m = casosBase(query, caseBase, 0.5f, 0.6f, 25,  0.5f, 0.5f);
 		}
 		if(!m)
 			this.move = getPosibleRandomMove();
 		
-		
+		nTotal++;
 		CBRCase newCase = createNewCase(query, specificCases, this.storageManager);
 		this.storageManager.storeCase(newCase);
 		
@@ -172,6 +175,7 @@ public class GhostsCBRengine implements StandardCBRApplication {
 	}
 	
 	private MOVE getPosibleRandomMove() {
+		nRandom++;
 		MOVE[] m = game.getPossibleMoves(game.getGhostCurrentNodeIndex(ghost), game.getGhostLastMoveMade(ghost));
 		//System.out.println("Random: " + ghost.toString());
 		if(m.length == 0)
@@ -190,7 +194,7 @@ public class GhostsCBRengine implements StandardCBRApplication {
 	 * @param p1 peso de la similitud
 	 * @param p2 peso del resultado
 	 */
-	private boolean casosBase(CBRQuery query, CBRCaseBase cbrC, float sim, float res, int NN, float p1, float p2){
+	private boolean casosBase(CBRQuery query, CachedLinearCaseBase cbrC, float sim, float res, int NN, float p1, float p2){
 		//Compute NN
 		Collection<RetrievalResult> eval = customNN(cbrC.getCases(), query);		
 		
@@ -199,6 +203,7 @@ public class GhostsCBRengine implements StandardCBRApplication {
 		double similarity;
 		double valor = 0, aux = 0;
 		CBRCase bestCase = null;
+		RetrievalResult bestRR = null;
 		
 		Collection<RetrievalResult> nCases = SelectCases.selectTopKRR(eval, NN);
 		
@@ -216,22 +221,39 @@ public class GhostsCBRengine implements StandardCBRApplication {
 			if(valor < aux) {
 				valor = aux;
 				bestCase = simCase;
+				bestRR = first;
 			}
 			
 		}		
 		
 		if(bestCase == null) {
-			move = getPosibleRandomMove();
+			//move = getPosibleRandomMove();
 			return false;
 		}
 		else {
 			solution = (GhostsSolution) bestCase.getSolution();
 			move = MOVE.values()[solution.getMove()];
+			nCases.remove(bestRR);
+			removeSimilarCases(nCases, bestCase, NN-1, cbrC);
 			return true;
 		}
 			
 		//Now compute a solution for the query	
 		
+	}
+	
+	private void removeSimilarCases(Collection<RetrievalResult> nCases, CBRCase bestCase, int NN, CachedLinearCaseBase cbrC) {
+		double similarity;
+		GhostsSolution solution1 = (GhostsSolution) bestCase.getSolution();
+		for(int i = 0; i < NN; i ++) {
+			RetrievalResult first = nCases.iterator().next();
+			CBRCase simCase = first.get_case();
+			similarity = first.getEval();
+			GhostsSolution solution2 = (GhostsSolution) simCase.getSolution();
+			if(similarity >= 0.95 && solution1.getMove().equals(solution2.getMove())) {
+				cbrC.forgetCase(simCase);
+			}
+		}
 	}
 	
 	public Collection<RetrievalResult> customNN(Collection<CBRCase> cases, CBRQuery query) {
@@ -259,41 +281,43 @@ public class GhostsCBRengine implements StandardCBRApplication {
 		GhostsDescription _case = (GhostsDescription)description2;
 
 		double simil = 1;
-		double maxDist = 300;
+		double maxDist = 250;
 		int maxTime = 200;
 		
 		simil *= MOVE.values()[_query.getLastDir()].opposite().equals(MOVE.values()[_case.getLastDir()]) ? 0.0 : 1.0;
-		
+		simil *= MOVE.values()[_query.getPacmanLastDir()].opposite().equals(MOVE.values()[_case.getPacmanLastDir()]) ? 0.0 : 1.0;		
 		simil *= _query.getNLevel().equals(_case.getNLevel()) ? 1.0 : 0.0;
+		simil *= _query.getMyIndex().equals(_case.getMyIndex())?1:0;
+		simil *= _query.getIndexPacMan().equals(_case.getIndexPacMan())?1:0;
 		
 		if(simil == 0)
 			return 0.0;
 
-		simil *= 1-Math.abs(_query.getDistanceToPacManI()-_case.getDistanceToPacManI())/maxDist;
+		//simil *= 1-Math.abs(_query.getDistanceToPacManI()-_case.getDistanceToPacManI())/maxDist;
 		
-		simil += 1-Math.abs(_query.getDistanceToPacManP()-_case.getDistanceToPacManP())/maxDist;
+		//simil += 1-Math.abs(_query.getDistanceToPacManP()-_case.getDistanceToPacManP())/maxDist;
 		
-		simil += 1-Math.abs(_query.getDistanceToPacManB()-_case.getDistanceToPacManB())/maxDist;
+		//simil += 1-Math.abs(_query.getDistanceToPacManB()-_case.getDistanceToPacManB())/maxDist;
 		
-		simil += 1-Math.abs(_query.getDistanceToPacManS()-_case.getDistanceToPacManS())/maxDist;
+		//simil += 1-Math.abs(_query.getDistanceToPacManS()-_case.getDistanceToPacManS())/maxDist;
 		
-		simil += 1-Math.abs(_query.getDistancePacManToPowerPill()-_case.getDistancePacManToPowerPill())/maxDist;
+		simil *= 1-Math.abs(_query.getDistancePacManToPowerPill()-_case.getDistancePacManToPowerPill())/maxDist;
 		
 		simil += 1-Math.abs(_query.getEatableTime()-_case.getEatableTime())/maxTime;
 		
-		simil += game.getDistance(_query.getMyIndex(), _case.getMyIndex(), DM.PATH)<5?game.getDistance(_query.getMyIndex(), _case.getMyIndex(), DM.PATH)/5:0;
+		//simil += game.getDistance(_query.getMyIndex(), _case.getMyIndex(), DM.EUCLID)<5?game.getDistance(_query.getMyIndex(), _case.getMyIndex(), DM.EUCLID)/5:0;
 		
-		simil += game.getDistance(_query.getIndexP(), _case.getIndexP(), DM.PATH)<20?game.getDistance(_query.getIndexP(), _case.getIndexP(), DM.PATH)/20:0;
+		//simil += game.getDistance(_query.getIndexP(), _case.getIndexP(), DM.PATH)<20?game.getDistance(_query.getIndexP(), _case.getIndexP(), DM.PATH)/20:0;
 		
-		simil += game.getDistance(_query.getIndexI(), _case.getIndexI(), DM.PATH)<20?game.getDistance(_query.getIndexI(), _case.getIndexI(), DM.PATH)/20:0;
+		//simil += game.getDistance(_query.getIndexI(), _case.getIndexI(), DM.PATH)<20?game.getDistance(_query.getIndexI(), _case.getIndexI(), DM.PATH)/20:0;
 		
-		simil += game.getDistance(_query.getIndexS(), _case.getIndexS(), DM.PATH)<20?game.getDistance(_query.getIndexS(), _case.getIndexS(), DM.PATH)/20:0;
+		//simil += game.getDistance(_query.getIndexS(), _case.getIndexS(), DM.PATH)<20?game.getDistance(_query.getIndexS(), _case.getIndexS(), DM.PATH)/20:0;
 		
-		simil += game.getDistance(_query.getIndexB(), _case.getIndexB(), DM.PATH)<20?game.getDistance(_query.getIndexB(), _case.getIndexB(), DM.PATH)/20:0;
+		//simil += game.getDistance(_query.getIndexB(), _case.getIndexB(), DM.PATH)<20?game.getDistance(_query.getIndexB(), _case.getIndexB(), DM.PATH)/20:0;
 
-		simil += game.getDistance(_query.getIndexPacMan(), _case.getIndexPacMan(), DM.PATH)<20?game.getDistance(_query.getIndexPacMan(), _case.getIndexPacMan(), DM.PATH)/20:0;
+		//simil += game.getDistance(_query.getIndexPacMan(), _case.getIndexPacMan(), DM.PATH)<15?game.getDistance(_query.getIndexPacMan(), _case.getIndexPacMan(), DM.PATH)/15:0;
 
-		return simil/12.0;
+		return simil/2.0;
 
 		}
 
@@ -329,6 +353,8 @@ public class GhostsCBRengine implements StandardCBRApplication {
 		this.storageManagerBase.close();
 		this.caseBase.close();
 		this.specificCases.close();
+		
+		System.out.println("Total random: " + nRandom/(float)nTotal);
 	}
 
 }

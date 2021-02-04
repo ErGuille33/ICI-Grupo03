@@ -41,4 +41,6 @@
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica5.grupo03.ghost.CBRengine.GhostsDescription"/>
     <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica5.grupo03.custom.ParallelNNScoringMethod"/>
     <fullyQualifiedTypeName name="pacman.game.Constants.GHOST"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica5.grupo03.ghost.GhostsInput"/>
+    <fullyQualifiedTypeName name="es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.MsPacManInput"/>
 </qualifiedTypeNameHistroy>

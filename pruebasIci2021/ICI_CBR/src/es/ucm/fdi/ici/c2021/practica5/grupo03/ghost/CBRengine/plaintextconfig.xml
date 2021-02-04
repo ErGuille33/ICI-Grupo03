@@ -5,25 +5,17 @@
 	<DescriptionMappings>
 		<Map>id</Map>
 		
-		<Map>distanceToPacManP</Map>
-		<Map>distanceToPacManB</Map>
-		<Map>distanceToPacManI</Map>
-		<Map>distanceToPacManS</Map>
-		
 		<Map>distancePacManToPowerPill</Map>
 		
 		<Map>eatableTime</Map>
-		
-		<Map>indexP</Map>
-		<Map>indexB</Map>
-		<Map>indexI</Map>
-		<Map>indexS</Map>
+
 		
 		<Map>indexPacMan</Map>
 		<Map>myIndex</Map>
 		
 		<Map>nLevel</Map>
 		<Map>lastDir</Map>
+		<Map>pacmanLastDir</Map>
 		
 		<Map>lifes</Map>
 		<Map>activePowerPills</Map>

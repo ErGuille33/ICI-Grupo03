@@ -26,6 +26,7 @@ public class GhostsDescription implements CaseComponent {
 	
 	Integer nLevel;
 	Integer lastDir;
+	Integer pacmanLastDir;
 	
 	//Atributos para el resultado
 	Integer lifes;
@@ -146,6 +147,14 @@ public class GhostsDescription implements CaseComponent {
 
 	public void setLastDir(Integer lastDir) {
 		this.lastDir = lastDir;
+	}
+	
+	public Integer getPacmanLastDir() {
+		return pacmanLastDir;
+	}
+
+	public void setPacmanLastDir(Integer pacmanLastDir) {
+		this.pacmanLastDir = pacmanLastDir;
 	}
 
 	@Override

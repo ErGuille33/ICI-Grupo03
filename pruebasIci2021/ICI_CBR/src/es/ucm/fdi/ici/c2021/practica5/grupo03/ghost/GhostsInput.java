@@ -31,6 +31,7 @@ public class GhostsInput implements Input {
 	
 	Integer nLevel;
 	Integer lastDir;
+	Integer pacmanLastDir;
 	
 	//Atributos para el resultado
 	Integer lifes;
@@ -63,7 +64,8 @@ public class GhostsInput implements Input {
 		lifes = game.getPacmanNumberOfLivesRemaining();
 		
 		nLevel = game.getCurrentLevel();
-		lastDir = game.getPacmanLastMoveMade().ordinal();
+		pacmanLastDir = game.getPacmanLastMoveMade().ordinal();
+		lastDir = game.getGhostLastMoveMade(ghost).ordinal();
 	}
 
 	public void setGhost(GHOST ghost) {
@@ -107,6 +109,7 @@ public class GhostsInput implements Input {
 
 		
 		description.setLastDir(lastDir);
+		description.setPacmanLastDir(pacmanLastDir);
 		description.setNLevel(nLevel);
 		description.setLifes(lifes);
 		description.setActivePowerPills(activePowerPills);

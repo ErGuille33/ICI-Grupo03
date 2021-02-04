@@ -65,7 +65,7 @@ public class MsPacMan extends PacmanController {
 	@Override
 	public MOVE getMove(Game game, long timeDue) {
 		Input in = new MsPacManInput(game);
-
+		System.out.println(game.getDistance(game.getPowerPillIndices()[0], game.getPowerPillIndices()[3], DM.EUCLID));
 		return fsm.run(in);
 	}
 

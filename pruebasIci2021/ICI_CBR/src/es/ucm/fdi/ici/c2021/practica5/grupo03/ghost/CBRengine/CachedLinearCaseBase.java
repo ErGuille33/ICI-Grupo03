@@ -75,6 +75,10 @@ public class CachedLinearCaseBase implements CBRCaseBase {
 	public void learnCases(Collection<CBRCase> cases) {
 		workingCases.addAll(cases);
 	}
+	
+	public void forgetCase(CBRCase caseToRemove) {
+		casesToRemove.add(caseToRemove);
+	}
 
 }
 

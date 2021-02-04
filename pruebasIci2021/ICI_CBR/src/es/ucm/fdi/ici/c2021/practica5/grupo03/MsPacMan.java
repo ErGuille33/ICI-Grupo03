@@ -1,6 +1,7 @@
-package es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan;
+package es.ucm.fdi.ici.c2021.practica5.grupo03;
 
 import es.ucm.fdi.gaia.jcolibri.exception.ExecutionException;
+import es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.MsPacManInput;
 import es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.CBRengine.MsPacManCBRengine;
 import es.ucm.fdi.ici.c2021.practica5.grupo03.msPacMan.CBRengine.MsPacManStorageManager;
 
@@ -15,7 +16,7 @@ public class MsPacMan extends PacmanController {
 	MsPacManStorageManager storageManager;
 	MsPacManStorageManager baseStorageManager;
 	
-	final static String FILE_PATH = "cbrdata/grupo03/MsPacMan/%s.csv"; //Cuidado!! poner el grupo aquí
+	final static String FILE_PATH = "bin/es/ucm/fdi/ici/c2021/practica5/grupo03/data/MsPacMan/%s.csv"; //Cuidado!! poner el grupo aquí
 	
 	public MsPacMan()
 	{

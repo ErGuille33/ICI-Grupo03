@@ -1,8 +1,9 @@
-package es.ucm.fdi.ici.c2021.practica5.grupo03.ghost;
+package es.ucm.fdi.ici.c2021.practica5.grupo03;
 
 import java.util.EnumMap;
 
 import es.ucm.fdi.gaia.jcolibri.exception.ExecutionException;
+import es.ucm.fdi.ici.c2021.practica5.grupo03.ghost.GhostsInput;
 import es.ucm.fdi.ici.c2021.practica5.grupo03.ghost.CBRengine.GhostsCBRengine;
 import es.ucm.fdi.ici.c2021.practica5.grupo03.ghost.CBRengine.GhostsStorageManager;
 
@@ -12,16 +13,16 @@ import pacman.game.Constants.GHOST;
 import pacman.game.Constants.MOVE;
 import pacman.game.Game;
 
-public class Ghost extends GhostController {
+public class Ghosts extends GhostController {
 
 	GhostsInput input;
 	GhostsCBRengine cbrEngine;
 	GhostsStorageManager storageManager;
 	GhostsStorageManager baseStorageManager;
 	
-	final static String FILE_PATH = "cbrdata/grupo03/Ghost/%s.csv"; //Cuidado!! poner el grupo aquí
+	final static String FILE_PATH = "bin/es/ucm/fdi/ici/c2021/practica5/grupo03/data/Ghosts/%s.csv"; //Cuidado!! poner el grupo aquí
 	
-	public Ghost()
+	public Ghosts()
 	{
 		this.input = new GhostsInput();
 
